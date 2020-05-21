@@ -1,19 +1,14 @@
-const http = require('http');
+const express = require('express');
+const app = express();
+const hostname = 'localhost';
+let port = 8080;
 
-const hostname = '127.0.0.1';
-const port = 8080;
+app.get('/', (req, res) => res.send('Helloooooo'));
 
-const server = http.createServer((req, res) => {
-  res.statusCode = 200;
-  res.setHeader('Content-Type', 'text/plain');
-  res.end('Hello World');
-});
+if (process.argv[2] !== null) {
+  port = process.argv[2];
+}
 
-server.listen(port, hostname, () => {
-  if(process.argv[2] !== null){
-    console.log(`Server running at http://${hostname}:${process.argv[2]}/`);
-  }
-  else{
-    console.log(`Server running at http://${hostname}:${port}/`);
-  }
+app.listen(port, hostname, () => {
+  console.log(`Server running at http://${hostname}:${port}/`);
 });

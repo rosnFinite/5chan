@@ -23,6 +23,7 @@
   "homepage": "https://github.com/rosnFinite/5chan#readme",
   "dependencies": {
     "browserify": "^16.5.1",
+    "express": "^4.17.1",
     "less": "^3.11.1",
     "less-plugin-clean-css": "^1.5.1",
     "semistandard": "^14.2.0"
