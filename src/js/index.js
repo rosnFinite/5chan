@@ -10,10 +10,9 @@ const server = http.createServer((req, res) => {
 });
 
 server.listen(port, hostname, () => {
-  if(process.argv[2] !== null){
+  if (process.argv[2] !== null) {
     console.log(`Server running at http://${hostname}:${process.argv[2]}/`);
-  }
-  else{
+  } else {
     console.log(`Server running at http://${hostname}:${port}/`);
   }
 });
