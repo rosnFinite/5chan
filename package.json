@@ -1,0 +1,22 @@
+{
+  "name": "5chan",
+  "version": "1.0.0",
+  "description": "",
+  "main": "/src/js/index.js",
+  "scripts": {
+    "build": "browserify ./src/js/index.js -o ./build/bundle.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rosnFinite/5chan.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rosnFinite/5chan/issues"
+  },
+  "homepage": "https://github.com/rosnFinite/5chan#readme",
+  "dependencies": {
+    "browserify": "^16.5.1"
+  }
+}
