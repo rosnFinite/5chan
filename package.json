@@ -4,8 +4,8 @@
   "description": "",
   "main": "/src/js/index.js",
   "scripts": {
-    "build": "browserify ./src/js/index.js -o ./build/bundle.js; lessc --clean-css src/styles/style.less build/style.min.css ",
-    "debug": "browserify ./src/js/index.js -o ./build/bundle.js; lessc src/styles/style.less build/style.css",
+    "build": "browserify ./src/js/index.js -o ./build/bundle.js; lessc --clean-css ./src/styles/style.less ./build/style.min.css ",
+    "debug": "browserify ./src/js/index.js -o ./build/bundle.js; lessc ./src/styles/style.less ./build/style.css",
     "start": "node ./src/js/index.js",
     "lint": "eslint && csslint ./build/style.css"
   },
