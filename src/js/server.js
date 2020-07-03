@@ -90,6 +90,46 @@ app.post('/api/article/', (req, res, next) => {
   });
 });
 
+// Artikel aktualisieren
+app.patch('/api/article/:id', (req, res) => {
+  var data = {
+    title: req.body.title,
+    content: req.body.content
+  };
+  // COALSEC behält aktuellen Stand, falls keine Änderung
+  db.run(
+    'UPDATE article set title = COALESEC(?,title), content = COALESEC(?,content)',
+    [data.title, data.content, req.params.id],
+    function (err, result) {
+      if (err) {
+        res.status(400).json({ error: res.message });
+      }
+      res.json({
+        message: 'success',
+        data: data,
+        changes: this.changes
+      });
+    }
+  );
+});
+
+// Artikel löschen
+app.delete('/api/user/:id', (req, res, next) => {
+  db.run(
+    'DELETE FROM article WHERE id = ?',
+    req.params.id,
+    function (err, result) {
+      if (err) {
+        res.status(400).json({ error: res.message });
+      }
+      res.json({ 
+        message: 'deleted',
+        changes: this.changes
+      });
+    }
+  );
+});
+
 app.listen(port, hostname, () => {
   console.log(`Server running at http://${hostname}:${port}/`);
 });

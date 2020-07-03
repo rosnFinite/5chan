@@ -24,7 +24,7 @@ const db = new sqlite3.Database(DBSOURCE, (err) => {
           if (err) {
             console.log(err.message);
           }
-          console.log('A row has been inserted with rowid =', this.lastID);
+          console.log(`A row has been inserted with rowid ${this.lastID}`);
         });
       }
     });
