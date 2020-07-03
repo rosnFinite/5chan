@@ -122,7 +122,7 @@ app.delete('/api/user/:id', (req, res, next) => {
       if (err) {
         res.status(400).json({ error: res.message });
       }
-      res.json({ 
+      res.json({
         message: 'deleted',
         changes: this.changes
       });
