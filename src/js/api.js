@@ -80,10 +80,11 @@ router.post('/article/', uploadImage.single('articleImage'), (req, res, next) =>
 
   var data = {
     title: req.body.title,
-    content: req.body.content
+    content: req.body.content,
+    articleImage: req.file
   };
   var sql = 'INSERT INTO article (title, content, imagePath) VALUES (?,?,?)';
-  var params = [data.title, data.content, req.body.path];
+  var params = [data.title, data.content, data.articleImage];
   db.run(sql, params, function (err, result) {
     if (err) {
       res.status(400).json({ error: err.message, message: 'Fehler' });
