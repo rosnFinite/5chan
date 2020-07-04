@@ -66,8 +66,8 @@ router.get('/article/:id', (req, res, next) => {
 
 // Artikel erstellen
 router.post('/article/', uploadImage.single('articleImage'), (req, res, next) => {
-  console.log(req.body);
-  console.log(req.file);
+  // console.log(req.body);
+  // console.log(req.file);
   var errors = [];
   if (!req.body.title) {
     errors.push('Kein Titel angegeben');
@@ -102,15 +102,18 @@ router.post('/article/', uploadImage.single('articleImage'), (req, res, next) =>
 });
 
 // Artikel aktualisieren
-router.patch('/article/:id', (req, res) => {
+router.patch('/article/:id', uploadImage.single('articleImage'), (req, res, next) => {
   var data = {
     title: req.body.title,
-    content: req.body.content
+    content: req.body.content,
+    articleImage: req.body.articleImage !== null ? req.body.articleImage : null
   };
+  console.log(data);
+  console.log(req.title);
   // COALSEC behält aktuellen Stand, falls keine Änderung
   db.run(
-    'UPDATE article set title = COALESEC(?,title), content = COALESEC(?,content)',
-    [data.title, data.content, req.params.id],
+    'UPDATE article SET title = COALESCE(?,title), content = COALESCE(?,content), imagePath = COALESCE(?,imagePath) WHERE id = ?',
+    [data.title, data.content, data.articleImage, req.params.id],
     function (err, result) {
       if (err) {
         res.status(400).json({ error: res.message });
