@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const db = require('./database.js');
 const path = require('path');
+const fs = require('fs');
 
 // ImageStoring configuartion
 const multer = require('multer');
@@ -123,9 +124,30 @@ router.patch('/article/:id', (req, res) => {
     }
   );
 });
-
+/*
+function deleteImage (imagePath) {
+  try {
+    fs.unlinkSync(imagePath);
+  } catch (err) {
+    console.log(imagePath);
+    console.error(err);
+  }
+}
+*/
 // Artikel löschen
-router.delete('/user/:id', (req, res, next) => {
+router.delete('/article/:id', (req, res, next) => {
+  db.get('SELECT imagePath FROM article WHERE id = ?', req.params.id, (err, result) => {
+    if (err) {
+      console.log(err);
+      return;
+    }
+    // deleteImage(result.imagePath);
+    try {
+      fs.unlinkSync(result.imagePath);
+    } catch (err) {
+      console.error(err);
+    }
+  });
   db.run(
     'DELETE FROM article WHERE id = ?',
     req.params.id,
