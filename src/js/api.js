@@ -1,15 +1,16 @@
 const express = require('express');
 const router = express.Router();
 const db = require('./database.js');
+const path = require('path');
 
 // ImageStoring configuartion
 const multer = require('multer');
 const imageStorage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, './uploads/');
+    cb(null, path.join(__dirname, '../../uploads/'));
   },
   filename: function (req, file, cb) {
-    cb(null, new Date().toISOString() + file.originalname);
+    const now = new Date().toISOString(); const date = now.replace(/:/g, '-'); cb(null, date + file.originalname);
   }
 });
 const imageFilter = (req, file, cb) => {
@@ -30,6 +31,7 @@ router.get('/articles', (req, res, next) => {
   db.all(sql, params, (err, rows) => {
     if (err) {
       res.status(400).json({ error: err.message });
+      return;
     }
     res.json({
       message: 'success',
@@ -50,19 +52,20 @@ router.get('/article/:id', (req, res, next) => {
         res.status(404).json({ error: 'gesuchter Artikel existiert nicht' });
         // Debug
         console.log('gesuchter Artikel existiert nicht');
-      } else {
-        console.log(row);
-        res.json({
-          message: 'success',
-          data: row
-        });
+        return;
       }
+      console.log(row);
+      res.json({
+        message: 'success',
+        data: row
+      });
     }
   });
 });
 
 // Artikel erstellen
 router.post('/article/', uploadImage.single('articleImage'), (req, res, next) => {
+  console.log(req.body);
   console.log(req.file);
   var errors = [];
   if (!req.body.title) {
@@ -71,9 +74,10 @@ router.post('/article/', uploadImage.single('articleImage'), (req, res, next) =>
   if (!req.body.content) {
     errors.push('Kein Inhalt angegeben');
   }
-  if (req.body.imagePath === undefined) {
+  if (req.file === undefined) {
     console.log('no image');
   }
+
   var data = {
     title: req.body.title,
     content: req.body.content
@@ -82,7 +86,9 @@ router.post('/article/', uploadImage.single('articleImage'), (req, res, next) =>
   var params = [data.title, data.content, req.body.path];
   db.run(sql, params, function (err, result) {
     if (err) {
-      res.status(400).json({ error: err.message });
+      res.status(400).json({ error: err.message, message: 'Fehler' });
+      // Damit restliche Code nicht fortgesetzt wird
+      return;
     }
     res.json({
       message: 'success',
@@ -105,6 +111,7 @@ router.patch('/article/:id', (req, res) => {
     function (err, result) {
       if (err) {
         res.status(400).json({ error: res.message });
+        return;
       }
       res.json({
         message: 'success',
@@ -123,6 +130,7 @@ router.delete('/user/:id', (req, res, next) => {
     function (err, result) {
       if (err) {
         res.status(400).json({ error: res.message });
+        return;
       }
       res.json({
         message: 'deleted',
