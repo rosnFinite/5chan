@@ -10,7 +10,7 @@
     "start": "node ./src/js/server.js",
     "startDev": "nodemon ./src/js/server.js",
     "lint": "semistandard",
-    "clean": "node -e \"require('fs').rmdirSync('./build', { recursive: true })\"  && node -e \"require('fs').rmdirSync('./node_modules', { recursive: true })\" && node -e \"require('fs').rmdirSync('./db.sqlite3', { recursive: true })"
+    "clean": "node -e \"require('fs').rmdirSync('./build', { recursive: true })\"  && node -e \"require('fs').rmdirSync('./node_modules', { recursive: true })\" && node -e \"require('fs').rmdirSync('./db.sqlite3', { recursive: true })\""
   },
   "repository": {
     "type": "git",
@@ -28,6 +28,7 @@
     "express": "^4.17.1",
     "less": "^3.11.1",
     "less-plugin-clean-css": "^1.5.1",
+    "multer": "^1.4.2",
     "purecss": "^2.0.3",
     "semistandard": "^14.2.0",
     "sqlite3": "^5.0.0"

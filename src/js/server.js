@@ -10,6 +10,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.use(express.static('build'));
+app.use(express.static('uploads'));
 app.use('/api', api);
 
 app.get('/', (req, res) => {

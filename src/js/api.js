@@ -2,10 +2,31 @@ const express = require('express');
 const router = express.Router();
 const db = require('./database.js');
 
+// ImageStoring configuartion
+const multer = require('multer');
+const imageStorage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, './uploads/');
+  },
+  filename: function (req, file, cb) {
+    cb(null, new Date().toISOString() + file.originalname);
+  }
+});
+const imageFilter = (req, file, cb) => {
+  //  reject non jpegs
+  if (file.mimetype === 'image/jpeg') {
+    cb(null, true);
+  } else {
+    cb(null, false);
+  }
+};
+const uploadImage = multer({ storage: imageStorage, fileFilter: imageFilter });
+
 // Liste aller Einträger der Datenbank
 router.get('/articles', (req, res, next) => {
   var sql = 'select * from article';
   var params = [];
+  console.log('test');
   db.all(sql, params, (err, rows) => {
     if (err) {
       res.status(400).json({ error: err.message });
@@ -41,7 +62,8 @@ router.get('/article/:id', (req, res, next) => {
 });
 
 // Artikel erstellen
-router.post('/article/', (req, res, next) => {
+router.post('/article/', uploadImage.single('articleImage'), (req, res, next) => {
+  console.log(req.file);
   var errors = [];
   if (!req.body.title) {
     errors.push('Kein Titel angegeben');
@@ -49,12 +71,15 @@ router.post('/article/', (req, res, next) => {
   if (!req.body.content) {
     errors.push('Kein Inhalt angegeben');
   }
+  if (req.body.imagePath === undefined) {
+    console.log('no image');
+  }
   var data = {
     title: req.body.title,
     content: req.body.content
   };
-  var sql = 'INSERT INTO article (title, content) VALUES (?,?)';
-  var params = [data.title, data.content];
+  var sql = 'INSERT INTO article (title, content, imagePath) VALUES (?,?,?)';
+  var params = [data.title, data.content, req.body.path];
   db.run(sql, params, function (err, result) {
     if (err) {
       res.status(400).json({ error: err.message });

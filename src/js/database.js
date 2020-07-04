@@ -10,7 +10,7 @@ const db = new sqlite3.Database(DBSOURCE, (err) => {
   } else {
     // Datenbankverbindung erstellt
     console.log('Connected to SQLite database');
-    db.run('CREATE TABLE article ( id INTEGER PRIMARY KEY AUTOINCREMENT, title text, content text)', (err) => {
+    db.run('CREATE TABLE article ( id INTEGER PRIMARY KEY AUTOINCREMENT, title text, content text, imagePath text)', (err) => {
       if (err) {
         // Tabelle wurde bereits erstellt
         console.error(err);
