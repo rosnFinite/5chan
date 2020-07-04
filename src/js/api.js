@@ -74,15 +74,16 @@ router.post('/article/', uploadImage.single('articleImage'), (req, res, next) =>
   if (!req.body.content) {
     errors.push('Kein Inhalt angegeben');
   }
-  if (req.file === undefined) {
-    console.log('no image');
-  }
-
   var data = {
     title: req.body.title,
     content: req.body.content,
-    articleImage: req.file
+    articleImage: null
   };
+  if (req.file !== undefined) {
+    data.articleImage = req.file.path;
+  } else {
+    console.log('No Image');
+  }
   var sql = 'INSERT INTO article (title, content, imagePath) VALUES (?,?,?)';
   var params = [data.title, data.content, data.articleImage];
   db.run(sql, params, function (err, result) {
