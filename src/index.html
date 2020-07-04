@@ -7,7 +7,7 @@
         <title>5Chan</title>
     </head>
     <body>
-        <script src= "bundle.js" charset="utf-8">console.log("test");</script>
+        <!--<script src= "bundle.js" charset="utf-8">console.log("test");</script>-->
 
         <div id="layout" class="pure-g">
             <div class="sidebar pure-u-1 pure-u-md-1-4">
@@ -18,7 +18,9 @@
                     <!-- Alle Posts -->
                     <div class="posts">
                         <!--Ein Post-->
-                        <script src='bundle.js'>testPosts.forEach(testPost => {document.getElementById("test").innerHTML = "Hello JavaScript!";})</script>
+                        <button id="retrieve" data-url="/">Retrieve</button>
+                        <p id="results"></p>
+                        <script src="/bundle.js" async></script>
                         <section class="post">
                             <header class="post_header">
                                 <h2 id="test" class="post_title">test</h2>
