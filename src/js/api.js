@@ -6,7 +6,7 @@ const fs = require('fs');
 
 // ImageStoring configuartion
 const multer = require('multer');
-const imageStorage = multer.diskStorage({
+const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, path.join(__dirname, '../../uploads/'));
   },
@@ -14,15 +14,16 @@ const imageStorage = multer.diskStorage({
     const now = new Date().toISOString(); const date = now.replace(/:/g, '-'); cb(null, date + file.originalname);
   }
 });
-const imageFilter = (req, file, cb) => {
+const fileFilter = (req, file, cb) => {
   //  reject non jpegs
-  if (file.mimetype === 'image/jpeg') {
+  if (file.mimetype === 'image/jpeg' || file.mimetype === 'application/json') {
     cb(null, true);
   } else {
     cb(null, false);
   }
 };
-const uploadImage = multer({ storage: imageStorage, fileFilter: imageFilter });
+
+const upload = multer({ storage: storage, fileFilter: fileFilter });
 
 // Liste aller Einträger der Datenbank
 router.get('/articles', (req, res, next) => {
@@ -64,8 +65,8 @@ router.get('/article/:id', (req, res, next) => {
   });
 });
 
-// Artikel erstellen
-router.post('/article/', uploadImage.single('articleImage'), (req, res, next) => {
+// Artikel erstellen articleImageChange
+router.post('/article/', upload.single('articleImage'), (req, res, next) => {
   // console.log(req.body);
   // console.log(req.file);
   var errors = [];
@@ -86,7 +87,7 @@ router.post('/article/', uploadImage.single('articleImage'), (req, res, next) =>
   } else {
     console.log('No Image');
   }
-  var sql = 'INSERT INTO article (timestamp, title, content, imagePath) VALUES (?,?,?,?)';
+  var sql = 'INSERT INTO article (timestamp, title, content, filePath) VALUES (?,?,?,?)';
   var params = [data.timestamp, data.title, data.content, data.articleImage];
   db.run(sql, params, function (err, result) {
     if (err) {
@@ -102,11 +103,11 @@ router.post('/article/', uploadImage.single('articleImage'), (req, res, next) =>
   });
 });
 
-// Artikel aktualisieren
-router.patch('/article/:id', uploadImage.single('articleImage'), (req, res, next) => {
+// Artikel aktualisieren articleImageChange
+router.patch('/article/:id', upload.single('articleImage'), (req, res, next) => {
   // Veraltetes Bild aus Datei löschen
   if (req.file !== undefined) {
-    db.get('SELECT imagePath FROM article WHERE id = ?', req.params.id, (err, result) => {
+    db.get('SELECT filePath FROM article WHERE id = ?', req.params.id, (err, result) => {
       if (err) {
         console.log(err);
         console.log(result);
@@ -114,7 +115,7 @@ router.patch('/article/:id', uploadImage.single('articleImage'), (req, res, next
       }
       // deleteImage(result.imagePath);
       try {
-        fs.unlinkSync(result.imagePath);
+        fs.unlinkSync(result.filePath);
       } catch (err) {
         console.error(err);
         console.log(result);
@@ -129,9 +130,9 @@ router.patch('/article/:id', uploadImage.single('articleImage'), (req, res, next
   };
   console.log(data);
 
-  // COALSEC behält aktuellen Stand, falls keine Änderung
+  // COALSEC behält aktuellen Stand, falls keine Änderung articleImageChange
   db.run(
-    'UPDATE article SET timestamp = ?, title = COALESCE(?,title), content = COALESCE(?,content), imagePath = COALESCE(?,imagePath) WHERE id = ?',
+    'UPDATE article SET timestamp = ?, title = COALESCE(?,title), content = COALESCE(?,content), filePath = COALESCE(?,filePath) WHERE id = ?',
     [data.timestamp, data.title, data.content, data.articleImage, req.params.id],
     function (err, result) {
       if (err) {
@@ -147,7 +148,7 @@ router.patch('/article/:id', uploadImage.single('articleImage'), (req, res, next
       });
     }
   );
-  db.get('SELECT imagePath FROM article WHERE id = ?', req.params.id, (err, result) => {
+  db.get('SELECT filePath FROM article WHERE id = ?', req.params.id, (err, result) => {
     if (err) {
       console.log(err);
       return;
@@ -170,14 +171,14 @@ function deleteImage (imagePath) {
 
 // Artikel löschen
 router.delete('/article/:id', (req, res, next) => {
-  db.get('SELECT imagePath FROM article WHERE id = ?', req.params.id, (err, result) => {
+  db.get('SELECT filePath FROM article WHERE id = ?', req.params.id, (err, result) => {
     if (err) {
       console.log(err);
       return;
     }
     // deleteImage(result.imagePath);
     try {
-      fs.unlinkSync(result.imagePath);
+      fs.unlinkSync(result.filePath);
     } catch (err) {
       console.error(err);
     }
