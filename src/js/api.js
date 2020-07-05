@@ -77,7 +77,7 @@ router.post('/article/', upload.single('articleImage'), (req, res, next) => {
     errors.push('Kein Inhalt angegeben');
   }
   var data = {
-    timestamp: new Date().toISOString(),
+    timestamp: new Date().toLocaleString('de-DE', { timeZone: 'UTC' }),
     title: req.body.title,
     content: req.body.content,
     articleImage: null
