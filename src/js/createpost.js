@@ -1,9 +1,8 @@
 const nodes = require('./helper.js');
 
 var element = document.getElementById('posts');
-
-var counter;
-for (counter = 0; counter < 10; counter++) {
+var counter = 0;
+function createOnePost () {
   var post = nodes.Node.create('section', {
     id: 'post' + counter,
     class: 'post'
@@ -30,5 +29,9 @@ for (counter = 0; counter < 10; counter++) {
   nodes.Node.append([posttitle, posttime], header);
   nodes.Node.append([header, posttext], post);
   element.appendChild(post);
-  nodes.Node.loadCss('./style.min.css');
+  counter++;
 }
+module.exports = {
+  createOnePost: createOnePost
+};
+
