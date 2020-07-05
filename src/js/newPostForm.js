@@ -5,7 +5,7 @@ var element = document.getElementById('posts');
 function openNewPostForm () {
   console.log(document.getElementById('form'));
   if (document.getElementById('form') === null) {
-    var form = forms.Node.create('section', {
+    var form = forms.Node.create('form', {
       id: 'form',
       class: 'pure-form pure-form-aligned'
     });
@@ -27,7 +27,7 @@ function openNewPostForm () {
       for: 'aligned-text'
     }, 'Text eingeben');
     var textInput = forms.Node.create('input', {
-      id: 'aligned-text',
+      id: 'content',
       class: 'post-description',
       type: 'text',
       placeholder: 'Post...'
@@ -57,7 +57,7 @@ function openNewPostForm () {
 
     var submit = forms.Node.create('input', {
       id: 'submit',
-      type: 'button',
+      type: 'submit',
       class: 'pure-button pure-button-primary',
       value: 'Posten'
     });
@@ -80,6 +80,21 @@ function openNewPostForm () {
     document.getElementById('cancel').addEventListener('click', function (e) {
       deleteForm();
     });
+    document.getElementById('form').onsubmit = async (e) => {
+      e.preventDefault();
+      var formdata = new FormData();
+      formdata.append('content', document.getElementById('content').value);
+      formdata.append('title', document.getElementById('aligned-title').value);
+      formdata.append('articleImage', document.getElementById('aligned-file').files[0]);
+      const response = await fetch('/api/article', {
+        method: 'POST',
+        body: formdata
+      });
+
+      const result = await response.json();
+
+      deleteForm();
+    };
   }
 }
 function deleteForm () {

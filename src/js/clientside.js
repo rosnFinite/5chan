@@ -34,7 +34,7 @@ const createForm = require('./newPostForm.js');
         console.log('success!', xhr);
 
         var postCounter = 0;
-        while (xhr.response.data[postCounter].title) {
+        while (xhr.response.data[postCounter].title !== undefined) {
           createPost.createOnePost(postCounter);
           document.getElementById('post_title' + postCounter).innerHTML = xhr.response.data[postCounter].title;
           document.getElementById('post_text' + postCounter).innerHTML = xhr.response.data[postCounter].content;
@@ -66,7 +66,7 @@ const createForm = require('./newPostForm.js');
 
         var postCounter = 0;
         createPost.removeAllPosts();
-        while (xhr.response.data[postCounter].title) {
+        while (xhr.response.data[postCounter].title !== undefined) {
           createPost.createOnePost(postCounter);
           document.getElementById('post_title' + postCounter).innerHTML = xhr.response.data[postCounter].title;
           document.getElementById('post_text' + postCounter).innerHTML = xhr.response.data[postCounter].content;
