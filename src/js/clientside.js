@@ -22,27 +22,27 @@
     //  var bustCache = '?' + new Date().getTime();
     var XMLHttpRequest = require('xhr2');
     var oReq = new XMLHttpRequest();
+    var imageSource;
     oReq.onload = function (e) {
       var xhr = e.target;
       console.log('Inside the onload event');
-      /*  if (xhr.responseType === 'json') {
-        results.innerHTML = xhr.response.message;
-      } else {
-        results.innerHTML = JSON.parse(xhr.responseText).message;
-      } */
       if (xhr.status >= 200 && xhr.status < 300) {
         // What do when the request is successful
         console.log('success!', xhr);
         results.innerHTML = xhr.response.data.content;
+        imageSource = xhr.response.data.imagePath;
       }
     };
     oReq.onreadystatechange = function () {
       console.log('Inside the onreadystatechange event with readyState: ' + toReadyStateDescription(oReq.readyState));
     };
-    oReq.open('GET', 'http://localhost:8080/api/article/1', true);
+    oReq.open('GET', '/api/article/4', true);
+    console.log('testPath', imageSource);
+    oReq.open('Get', imageSource, true);
+    //  oReq.open('GET', oReq.response.data.imagePath, true);
     oReq.responseType = 'json';
     oReq.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-    oReq.setRequestHeader('x-vanillaAjaxWithoutjQuery-version', '1.0');
+    oReq.setRequestHeader('x-retrievetest', '1.0');
     oReq.send();
   });
 }());
