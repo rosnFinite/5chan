@@ -25,8 +25,14 @@ function createOnePost (counter) {
     class: 'post-meta'
   });
 
+  var postimage = nodes.Node.create('img', {
+    id: 'post_image' + counter,
+    class: 'pure-img',
+    src: ''
+  });
+
   nodes.Node.append([posttitle, posttime], header);
-  nodes.Node.append([header, posttext], post);
+  nodes.Node.append([header, postimage, posttext], post);
   element.appendChild(post);
   //  counter++;
 }

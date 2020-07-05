@@ -39,6 +39,7 @@ const createForm = require('./newPostForm.js');
           document.getElementById('post_title' + postCounter).innerHTML = xhr.response.data[postCounter].title;
           document.getElementById('post_text' + postCounter).innerHTML = xhr.response.data[postCounter].content;
           document.getElementById('post_timestamp' + postCounter).innerHTML = xhr.response.data[postCounter].timestamp;
+          document.getElementById('post_image' + postCounter).src = '/api/article/thumbnail/'.concat(postCounter + 1);
           postCounter++;
         }
       }
@@ -71,6 +72,7 @@ const createForm = require('./newPostForm.js');
           document.getElementById('post_title' + postCounter).innerHTML = xhr.response.data[postCounter].title;
           document.getElementById('post_text' + postCounter).innerHTML = xhr.response.data[postCounter].content;
           document.getElementById('post_timestamp' + postCounter).innerHTML = xhr.response.data[postCounter].timestamp;
+          document.getElementById('post_image' + postCounter).src = '/api/article/thumbnail/'.concat(postCounter + 1);
           postCounter++;
         }
       }

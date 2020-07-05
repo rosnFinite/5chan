@@ -42,6 +42,21 @@ router.get('/articles', (req, res, next) => {
   });
 });
 
+// Route für Bilder
+router.get('/article/thumbnail/:id', (req, res, next) => {
+  db.get('select filePath from article where id = ?', req.params.id, (err, result) => {
+    if (err) {
+      console.log('NO');
+      return;
+    }
+    try {
+      res.sendFile(result.filePath);
+    } catch (error) {
+      console.log('Keine Thumbnail angegeben');
+    }
+  });
+});
+
 // einzelner Artikel nach ID
 router.get('/article/:id', (req, res, next) => {
   var sql = 'select * from article where id = ?';
