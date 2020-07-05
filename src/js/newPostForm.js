@@ -82,18 +82,22 @@ function openNewPostForm () {
     });
     document.getElementById('form').onsubmit = async (e) => {
       e.preventDefault();
-      var formdata = new FormData();
-      formdata.append('content', document.getElementById('content').value);
-      formdata.append('title', document.getElementById('aligned-title').value);
-      formdata.append('articleImage', document.getElementById('aligned-file').files[0]);
-      const response = await fetch('/api/article', {
-        method: 'POST',
-        body: formdata
-      });
+      if (document.getElementById('content').value !== '' && document.getElementById('aligned-title').value !== '') {
+        var formdata = new FormData();
+        formdata.append('content', document.getElementById('content').value);
+        formdata.append('title', document.getElementById('aligned-title').value);
+        formdata.append('articleImage', document.getElementById('aligned-file').files[0]);
+        const response = await fetch('/api/article', {
+          method: 'POST',
+          body: formdata
+        });
 
-      const result = await response.json();
+        const result = await response.json();
 
-      deleteForm();
+        deleteForm();
+      } else {
+          alert('Falscheingabe in einem Feld, bitte neu versuchen!');
+      }
     };
   }
 }
