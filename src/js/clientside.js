@@ -23,6 +23,7 @@ const createForm = require('./newPostForm.js');
   };
   window.onload = function () {
     //  var bustCache = '?' + new Date().getTime();
+    // lololo
     var XMLHttpRequest = require('xhr2');
     var oReq = new XMLHttpRequest();
     //  var imageSource;
