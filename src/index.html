@@ -16,23 +16,18 @@
             <div class="content pure-u-1 pure-u-md-3-4">
                 <div>
                     <!-- Alle Posts -->
-                    <div class="posts">
+                    <div id="posts" class="posts">
                         <!--Ein Post-->
                         <button id="retrieve" data-url="/">Retrieve</button>
-                        <p id="results"></p>
-                        <img src="test.jpg" alt="test" id="image">
                         <script src="/bundle.js" async></script>
-                        <section class="post">
+                        <section id="post" class="post">
                             <header class="post_header">
-                                <h2 id="test" class="post_title">test</h2>
-                                <p class="post_timestamp">0:00</p>
+                                <h2 id="post_title" class="post_title"></h2>
+                                <p id="post_timestamp"class="post_timestamp"></p>
 
                             </header>
-
-                            <div class="post_text">
-                                <p>
-                                    Lorem ipsum
-                                </p>
+                            <img src="test.jpg" alt="test" id="image">
+                            <div id="post_text"class="post_text">
                             </div>
                         </section>
 
