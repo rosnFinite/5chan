@@ -76,6 +76,7 @@ router.post('/article/', uploadImage.single('articleImage'), (req, res, next) =>
     errors.push('Kein Inhalt angegeben');
   }
   var data = {
+    timestamp: new Date().toISOString(),
     title: req.body.title,
     content: req.body.content,
     articleImage: null
@@ -85,8 +86,8 @@ router.post('/article/', uploadImage.single('articleImage'), (req, res, next) =>
   } else {
     console.log('No Image');
   }
-  var sql = 'INSERT INTO article (title, content, imagePath) VALUES (?,?,?)';
-  var params = [data.title, data.content, data.articleImage];
+  var sql = 'INSERT INTO article (timestamp, title, content, imagePath) VALUES (?,?,?,?)';
+  var params = [data.timestamp, data.title, data.content, data.articleImage];
   db.run(sql, params, function (err, result) {
     if (err) {
       res.status(400).json({ error: err.message, message: 'Fehler' });
@@ -103,22 +104,42 @@ router.post('/article/', uploadImage.single('articleImage'), (req, res, next) =>
 
 // Artikel aktualisieren
 router.patch('/article/:id', uploadImage.single('articleImage'), (req, res, next) => {
+  // Veraltetes Bild aus Datei löschen
+  if (req.file !== undefined) {
+    db.get('SELECT imagePath FROM article WHERE id = ?', req.params.id, (err, result) => {
+      if (err) {
+        console.log(err);
+        console.log(result);
+        return;
+      }
+      // deleteImage(result.imagePath);
+      try {
+        fs.unlinkSync(result.imagePath);
+      } catch (err) {
+        console.error(err);
+        console.log(result);
+      }
+    });
+  }
   var data = {
+    timestamp: new Date().toISOString(),
     title: req.body.title,
     content: req.body.content,
-    articleImage: req.body.articleImage !== null ? req.body.articleImage : null
+    articleImage: req.file !== undefined ? req.file.path : null
   };
   console.log(data);
-  console.log(req.title);
+
   // COALSEC behält aktuellen Stand, falls keine Änderung
   db.run(
-    'UPDATE article SET title = COALESCE(?,title), content = COALESCE(?,content), imagePath = COALESCE(?,imagePath) WHERE id = ?',
-    [data.title, data.content, data.articleImage, req.params.id],
+    'UPDATE article SET timestamp = ?, title = COALESCE(?,title), content = COALESCE(?,content), imagePath = COALESCE(?,imagePath) WHERE id = ?',
+    [data.timestamp, data.title, data.content, data.articleImage, req.params.id],
     function (err, result) {
       if (err) {
         res.status(400).json({ error: res.message });
         return;
       }
+      console.log('Während dem Aktualisieren');
+      console.log(data.articleImage);
       res.json({
         message: 'success',
         data: data,
@@ -126,7 +147,16 @@ router.patch('/article/:id', uploadImage.single('articleImage'), (req, res, next
       });
     }
   );
+  db.get('SELECT imagePath FROM article WHERE id = ?', req.params.id, (err, result) => {
+    if (err) {
+      console.log(err);
+      return;
+    }
+    console.log('Ergebnis der Aktualisierung');
+    console.log(result);
+  });
 });
+
 /*
 function deleteImage (imagePath) {
   try {
@@ -137,6 +167,7 @@ function deleteImage (imagePath) {
   }
 }
 */
+
 // Artikel löschen
 router.delete('/article/:id', (req, res, next) => {
   db.get('SELECT imagePath FROM article WHERE id = ?', req.params.id, (err, result) => {
