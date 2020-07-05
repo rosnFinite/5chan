@@ -3,9 +3,9 @@ const createPost = require('./createpost.js');
 (function () {
   var retrieve = document.getElementById('retrieve');
   //  var results = document.getElementById('results');
-  var postTitle = document.getElementById('post_title');
-  var postTime = document.getElementById('post_timestamp');
-  var postText = document.getElementById('post_text');
+  //  var postTitle = document.getElementById('post_title');
+  //  var postTime = document.getElementById('post_timestamp');
+  //  var postText = document.getElementById('post_text');
   console.log(createPost);
   var toReadyStateDescription = function (state) {
     switch (state) {
@@ -34,16 +34,28 @@ const createPost = require('./createpost.js');
       if (xhr.status >= 200 && xhr.status < 300) {
         // What do when the request is successful
         console.log('success!', xhr);
-        postTitle.innerHTML = xhr.response.data.title;
-        postText.innerHTML = xhr.response.data.content;
-        postTime.innerHTML = xhr.response.data.imagePath;
+        for (var counter = 0; counter < 10; counter++) {
+          if (xhr.response.data[counter].title === undefined) {
+            counter++;
+            document.getElementById('post_title' + counter).innerHTML = '';
+            document.getElementById('post_text' + counter).innerHTML = '';
+            document.getElementById('post_timestamp' + counter).innerHTML = '';
+          } else {
+            document.getElementById('post_title' + counter).innerHTML = xhr.response.data[counter].title;
+            document.getElementById('post_text' + counter).innerHTML = xhr.response.data[counter].content;
+            document.getElementById('post_timestamp' + counter).innerHTML = xhr.response.data[counter].imagePath;
+          }
+        }
+        // postTitle.innerHTML = xhr.response.data[0].title;
+        // postText.innerHTML = xhr.response.data[0].content;
+        // postTime.innerHTML = xhr.response.data[0].imagePath;
         //  imageSource = xhr.response.data.imagePath;
       }
     };
     oReq.onreadystatechange = function () {
       console.log('Inside the onreadystatechange event with readyState: ' + toReadyStateDescription(oReq.readyState));
     };
-    oReq.open('GET', '/api/article/4', true);
+    oReq.open('GET', '/api/articles', true);
     oReq.responseType = 'json';
     oReq.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     oReq.setRequestHeader('x-retrievetest', '1.0');
