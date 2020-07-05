@@ -1,12 +1,9 @@
 
 const createPost = require('./createpost.js');
+const createForm = require('./newPostForm.js');
 (function () {
   var retrieve = document.getElementById('retrieve');
-  //  var siteLoaded = document.getElementById('body');
-  //  var results = document.getElementById('results');
-  //  var postTitle = document.getElementById('post_title');
-  //  var postTime = document.getElementById('post_timestamp');
-  //  var postText = document.getElementById('post_text');
+  var newPost = document.getElementById('newPost');
   console.log(createPost);
   var toReadyStateDescription = function (state) {
     switch (state) {
@@ -44,19 +41,6 @@ const createPost = require('./createpost.js');
           document.getElementById('post_timestamp' + postCounter).innerHTML = xhr.response.data[postCounter].timestamp;
           postCounter++;
         }
-
-        /*  for (var counter = 0; counter < 10; counter++) {
-          if (xhr.response.data[counter].title === undefined) {
-            counter++;
-            document.getElementById('post_title' + counter).innerHTML = '';
-            document.getElementById('post_text' + counter).innerHTML = '';
-            document.getElementById('post_timestamp' + counter).innerHTML = '';
-          } else {
-            document.getElementById('post_title' + counter).innerHTML = xhr.response.data[counter].title;
-            document.getElementById('post_text' + counter).innerHTML = xhr.response.data[counter].content;
-            document.getElementById('post_timestamp' + counter).innerHTML = xhr.response.data[counter].timestamp;
-          }
-        } */
       }
     };
     oReq.onreadystatechange = function () {
@@ -89,19 +73,6 @@ const createPost = require('./createpost.js');
           document.getElementById('post_timestamp' + postCounter).innerHTML = xhr.response.data[postCounter].timestamp;
           postCounter++;
         }
-
-        /*  for (var counter = 0; counter < 10; counter++) {
-          if (xhr.response.data[counter].title === undefined) {
-            counter++;
-            document.getElementById('post_title' + counter).innerHTML = '';
-            document.getElementById('post_text' + counter).innerHTML = '';
-            document.getElementById('post_timestamp' + counter).innerHTML = '';
-          } else {
-            document.getElementById('post_title' + counter).innerHTML = xhr.response.data[counter].title;
-            document.getElementById('post_text' + counter).innerHTML = xhr.response.data[counter].content;
-            document.getElementById('post_timestamp' + counter).innerHTML = xhr.response.data[counter].timestamp;
-          }
-        } */
       }
     };
     oReq.onreadystatechange = function () {
@@ -112,6 +83,10 @@ const createPost = require('./createpost.js');
     oReq.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     oReq.setRequestHeader('x-retrievetest', '1.0');
     oReq.send();
+  });
+  newPost.addEventListener('click', function (e) {
+    console.log('newPost');
+    createForm.openNewPostForm();
   });
   document.addEventListener('DomLoaded', function () {
     console.log('loaded');
