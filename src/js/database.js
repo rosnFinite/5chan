@@ -19,13 +19,6 @@ const db = new sqlite3.Database(DBSOURCE, (err) => {
         // Bei wiederholten Ausführen von npm start, wird bei jedem Durchlauf versucht eine neue Row zu erstellen.
         // Beim 2. Durchlauf wird Artikel mit ID = 2 und titel/content = null erstell. Beim 3.Durchlauf Artikel mit ID= 3...
         // somit fürht der URL Aufruf von article/id bei diesen nicht zu Fehlern sondern zu Erfolg ohne Ausgabe
-        var insert = 'INSERT INTO article (title, content) VALUES (?,?)';
-        db.run(insert, ['Keine Ahnung was ich hier tue', 'ich würde mich freuen wenn ich wüsste was hier passiert und wie ich diese Aufgabe bestehe'], (err) => {
-          if (err) {
-            console.log(err.message);
-          }
-          console.log(`A row has been inserted with rowid ${this.lastID}`);
-        });
       }
     });
   }

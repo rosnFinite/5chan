@@ -38,7 +38,7 @@ const createPost = require('./createpost.js');
 
         var postCounter = 0;
         while (xhr.response.data[postCounter].title) {
-          createPost.createOnePost();
+          createPost.createOnePost(postCounter);
           document.getElementById('post_title' + postCounter).innerHTML = xhr.response.data[postCounter].title;
           document.getElementById('post_text' + postCounter).innerHTML = xhr.response.data[postCounter].content;
           document.getElementById('post_timestamp' + postCounter).innerHTML = xhr.response.data[postCounter].timestamp;
@@ -79,7 +79,18 @@ const createPost = require('./createpost.js');
       if (xhr.status >= 200 && xhr.status < 300) {
         // What do when the request is successful
         console.log('success!', xhr);
-        for (var counter = 0; counter < 10; counter++) {
+
+        var postCounter = 0;
+        createPost.removeAllPosts();
+        while (xhr.response.data[postCounter].title) {
+          createPost.createOnePost(postCounter);
+          document.getElementById('post_title' + postCounter).innerHTML = xhr.response.data[postCounter].title;
+          document.getElementById('post_text' + postCounter).innerHTML = xhr.response.data[postCounter].content;
+          document.getElementById('post_timestamp' + postCounter).innerHTML = xhr.response.data[postCounter].timestamp;
+          postCounter++;
+        }
+
+        /*  for (var counter = 0; counter < 10; counter++) {
           if (xhr.response.data[counter].title === undefined) {
             counter++;
             document.getElementById('post_title' + counter).innerHTML = '';
@@ -90,7 +101,7 @@ const createPost = require('./createpost.js');
             document.getElementById('post_text' + counter).innerHTML = xhr.response.data[counter].content;
             document.getElementById('post_timestamp' + counter).innerHTML = xhr.response.data[counter].timestamp;
           }
-        }
+        } */
       }
     };
     oReq.onreadystatechange = function () {

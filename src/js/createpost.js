@@ -1,8 +1,7 @@
 const nodes = require('./helper.js');
 
 var element = document.getElementById('posts');
-var counter = 0;
-function createOnePost () {
+function createOnePost (counter) {
   var post = nodes.Node.create('section', {
     id: 'post' + counter,
     class: 'post'
@@ -29,9 +28,16 @@ function createOnePost () {
   nodes.Node.append([posttitle, posttime], header);
   nodes.Node.append([header, posttext], post);
   element.appendChild(post);
-  counter++;
+  //  counter++;
+}
+function removeAllPosts () {
+  var removeCounter = 0;
+  while (document.getElementById('post' + removeCounter) !== null) {
+    nodes.Node.remove(document.getElementById('post' + removeCounter));
+    removeCounter++;
+  }
 }
 module.exports = {
-  createOnePost: createOnePost
+  createOnePost: createOnePost,
+  removeAllPosts: removeAllPosts
 };
-
