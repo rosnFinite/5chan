@@ -1,6 +1,11 @@
 
 const createPost = require('./createpost.js');
 const createForm = require('./newPostForm.js');
+const mime = require('mime-types');
+
+function extension (filePath) {
+  return mime.lookup(filePath);
+}
 (function () {
   var retrieve = document.getElementById('retrieve');
   var newPost = document.getElementById('newPost');
@@ -41,9 +46,15 @@ const createForm = require('./newPostForm.js');
           document.getElementById('post_text' + postCounter).innerHTML = xhr.response.data[postCounter].content;
           document.getElementById('post_timestamp' + postCounter).innerHTML = xhr.response.data[postCounter].timestamp;
           if (xhr.response.data[postCounter].filePath !== null) {
-            document.getElementById('post_image' + postCounter).src = '/api/article/thumbnail/'.concat(postCounter + 1);
+            if (extension(xhr.response.data[postCounter].filePath) === 'image/jpeg') {
+              console.log('Post mit ID ' + postCounter + ' hat BILDDATEN');
+              document.getElementById('post_image' + postCounter).src = '/api/article/thumbnail/'.concat(postCounter + 1);
+            }
+            if (extension(xhr.response.data[postCounter].filePath) === 'application/json') {
+              console.log('Post mit ID ' + postCounter + ' hat KARTENDATEN');
+            }
           } else {
-            console.log('kein bild kein bild kein bild');
+            console.log('Post mit ID ' + postCounter + ' hat KEIN Thumbnail');
           }
           postCounter++;
         }
@@ -78,9 +89,15 @@ const createForm = require('./newPostForm.js');
           document.getElementById('post_text' + postCounter).innerHTML = xhr.response.data[postCounter].content;
           document.getElementById('post_timestamp' + postCounter).innerHTML = xhr.response.data[postCounter].timestamp;
           if (xhr.response.data[postCounter].filePath !== null) {
-            document.getElementById('post_image' + postCounter).src = '/api/article/thumbnail/'.concat(postCounter + 1);
+            if (extension(xhr.response.data[postCounter].filePath) === 'image/jpeg') {
+              console.log('Post mit ID ' + postCounter + ' hat BILDDATEN');
+              document.getElementById('post_image' + postCounter).src = '/api/article/thumbnail/'.concat(postCounter + 1);
+            }
+            if (extension(xhr.response.data[postCounter].filePath) === 'application/json') {
+              console.log('Post mit ID ' + postCounter + ' hat KARTENDATEN');
+            }
           } else {
-            console.log('kein bild kein bild kein bild');
+            console.log('Post mit ID ' + postCounter + ' hat KEIN Thumbnail');
           }
           postCounter++;
         }
