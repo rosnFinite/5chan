@@ -2,7 +2,7 @@
 const createPost = require('./createpost.js');
 const createForm = require('./newPostForm.js');
 const mime = require('mime-types');
-const L = require('leaflet');
+// const L = require('leaflet');
 var siteCounter = 0;
 var maxSites = 0;
 
@@ -66,9 +66,10 @@ function extension (filePath) {
             if (xhr.response.data[postCounter].filePath !== null) {
               if (extension(xhr.response.data[postCounter].filePath) === 'image/jpeg') {
                 console.log('Post mit ID ' + postCounter + ' hat BILDDATEN');
-                document.getElementById('post_image' + postCounter).style = 'height: 100%;';
+                //  document.getElementById('post_image' + postCounter).style = 'height: 100%;';
                 document.getElementById('post_image' + postCounter).src = '/api/article/thumbnail/'.concat(postCounter + 1);
               }
+              /*
               if (extension(xhr.response.data[postCounter].filePath) === 'application/json') {
                 console.log('Post mit ID ' + postCounter + ' hat KARTENDATEN');
                 const map = new L.Map('image_container' + postCounter);
@@ -80,6 +81,7 @@ function extension (filePath) {
                 map.addLayer(layer);
                 console.log(map);
               }
+              */
             } else {
               console.log('Post mit ID ' + postCounter + ' hat KEIN Thumbnail');
             }

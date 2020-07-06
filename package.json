@@ -26,6 +26,7 @@
     "browserify": "^16.5.1",
     "butternut": "^0.4.6",
     "express": "^4.17.1",
+    "leaflet": "^1.6.0",
     "less": "^3.11.1",
     "less-plugin-clean-css": "^1.5.1",
     "mime-types": "^2.1.27",
