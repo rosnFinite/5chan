@@ -36,10 +36,5 @@
   },
   "devDependencies": {
     "nodemon": "^2.0.4"
-  },
-  "semistandard": {
-    "ignore": [
-      "/src/js/newPostForm.js"
-    ]
   }
 }

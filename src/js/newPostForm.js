@@ -22,7 +22,8 @@ function openNewPostForm () {
     }, 'Titel eingeben');
     var titleInput = forms.Node.create('input', {
       id: 'aligned-title',
-      placeholder: 'title'
+      placeholder: 'title',
+      maxlength: '50'
     });
 
     var text = forms.Node.create('label', {
@@ -31,8 +32,13 @@ function openNewPostForm () {
     var textInput = forms.Node.create('textarea', {
       id: 'content',
       class: 'pure-input-1-2',
-      placeholder: 'Post...'
+      placeholder: 'Post...',
+      maxlength: '1026'
     });
+    var textCount = forms.Node.create('span', {
+      class: 'pure-form-message-inline',
+      id: 'textCount'
+    }, 'Zeichen übrig:  1024');
 
     var file = forms.Node.create('label', {
       for: 'aligned-file'
@@ -71,7 +77,7 @@ function openNewPostForm () {
 
     forms.Node.append([submit, cancel], pureControls);
     forms.Node.append([title, titleInput], pureControlGroup1);
-    forms.Node.append([text, textInput], pureControlGroup2);
+    forms.Node.append([text, textInput, textCount], pureControlGroup2);
     forms.Node.append([file, fileInput], pureControlGroup3);
     forms.Node.append([legend, pureControlGroup1, pureControlGroup2, pureControlGroup3, pureControls], fieldset);
     forms.Node.append([fieldset], form);
@@ -81,24 +87,29 @@ function openNewPostForm () {
     document.getElementById('cancel').addEventListener('click', function (e) {
       deleteForm();
     });
+    // Word Counter
+    document.getElementById('content').onkeyup = function () {
+      document.getElementById('textCount').innerHTML = 'Zeichen übrig: ' + (1024 - this.value.length);
+    };
+    // Form Submit
     document.getElementById('form').onsubmit = async (e) => {
       e.preventDefault();
       if (document.getElementById('content').value !== '' && document.getElementById('aligned-title').value !== '') {
-        var formdata = new FormData();
+        var formdata = new window.FormData();
         formdata.append('content', document.getElementById('content').value);
         formdata.append('title', document.getElementById('aligned-title').value);
         formdata.append('articleImage', document.getElementById('aligned-file').files[0]);
-        const response = await fetch('/api/article', {
+        const response = await window.fetch('/api/article', {
           method: 'POST',
           body: formdata
         });
 
         const result = await response.json();
-
+        console.log(result);
         deleteForm();
         document.getElementById('retrieve').click();
       } else {
-          alert('Falscheingabe in einem Feld, bitte neu versuchen!');
+        window.alert('Falscheingabe in einem Feld, bitte neu versuchen!');
       }
     };
   }
