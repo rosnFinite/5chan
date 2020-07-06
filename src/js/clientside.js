@@ -4,6 +4,7 @@ const createForm = require('./newPostForm.js');
 const mime = require('mime-types');
 const L = require('leaflet');
 var siteCounter = 0;
+var maxSites = 0;
 
 function extension (filePath) {
   return mime.lookup(filePath);
@@ -47,7 +48,12 @@ function extension (filePath) {
 
         var postCounterThisSite = 0;
         var postCounter = xhr.response.data.length - 1;
-        console.log('es lüuft weidejoidj');
+        maxSites = Math.ceil(postCounter / 10);
+        var aktSite = (siteCounter / 10) + 1;
+        console.log(aktSite);
+        document.getElementById('siteNumber').innerHTML = 'Seiten: ' + maxSites;
+        document.getElementById('siteNumberAkt').innerHTML = 'Akt Seite: ' + aktSite;
+
         createPost.removeAllPosts();
         postCounter -= siteCounter;
         while (postCounter >= 0) {
@@ -99,13 +105,15 @@ function extension (filePath) {
   });
   nextSite.addEventListener('click', function (e) {
     // muss noch gecaped werden
-    siteCounter += 10;
-    document.getElementById('retrieve').click();
+    if (siteCounter / 10 + 1 < maxSites) {
+      siteCounter += 10;
+      update();
+    }
   });
   prevSite.addEventListener('click', function (e) {
     if (siteCounter > 0) {
       siteCounter -= 10;
-      document.getElementById('retrieve').click();
+      update();
     }
   });
   document.addEventListener('DomLoaded', function () {
