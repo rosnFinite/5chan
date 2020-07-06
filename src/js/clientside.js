@@ -2,6 +2,7 @@
 const createPost = require('./createpost.js');
 const createForm = require('./newPostForm.js');
 const mime = require('mime-types');
+const L = require('leaflet');
 var siteCounter = 0;
 
 function extension (filePath) {
@@ -59,10 +60,19 @@ function extension (filePath) {
             if (xhr.response.data[postCounter].filePath !== null) {
               if (extension(xhr.response.data[postCounter].filePath) === 'image/jpeg') {
                 console.log('Post mit ID ' + postCounter + ' hat BILDDATEN');
+                document.getElementById('post_image' + postCounter).style = 'height: 100%;';
                 document.getElementById('post_image' + postCounter).src = '/api/article/thumbnail/'.concat(postCounter + 1);
               }
               if (extension(xhr.response.data[postCounter].filePath) === 'application/json') {
                 console.log('Post mit ID ' + postCounter + ' hat KARTENDATEN');
+                const map = new L.Map('image_container' + postCounter);
+                console.log(map);
+                var layer = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                  maxZoom: 19,
+                  attribution: '&copy; OSM Mapnik <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+                }).addTo(map);
+                map.addLayer(layer);
+                console.log(map);
               }
             } else {
               console.log('Post mit ID ' + postCounter + ' hat KEIN Thumbnail');

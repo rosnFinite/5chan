@@ -25,6 +25,11 @@ function createOnePost (counter) {
     class: 'post-meta'
   });
 
+  var imagecontainer = nodes.Node.create('div', {
+    id: 'image_container' + counter,
+    class: 'pure-u-1-2 pure-g ',
+    style: 'height: 250px; position: absolute;'
+  });
   var postimage = nodes.Node.create('img', {
     id: 'post_image' + counter,
     class: 'pure-img',
@@ -32,7 +37,8 @@ function createOnePost (counter) {
   });
 
   nodes.Node.append([posttitle, posttime], header);
-  nodes.Node.append([header, postimage, posttext], post);
+  nodes.Node.append([postimage], imagecontainer);
+  nodes.Node.append([header, imagecontainer, posttext], post);
   try {
     console.log('posting before');
     element.insertBefore(post, document.getElementById('post' + (counter - 1)));

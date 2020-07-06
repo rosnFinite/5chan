@@ -6,7 +6,7 @@
   "scripts": {
     "build": "npm run lint &&browserify ./src/js/clientside.js -o ./build/test.js &&  squash ./build/test.js > ./build/bundle.js && node -e \"require('fs').unlinkSync('./build/test.js')\" && npm run build:less",
     "build:less": "./node_modules/.bin/lessc --clean-css ./src/styles/style.less ./build/style.min.css",
-    "debug": "npm run lint &&browserify ./src/js/articles.js -o ./build/bundle.js && lessc ./src/styles/style.less ./build/style.min.css",
+    "debug": "npm run lint &&browserify ./src/js/clientside.js -o ./build/bundle.js && lessc ./src/styles/style.less ./build/style.min.css",
     "start": "node ./src/js/server.js",
     "startDev": "nodemon ./src/js/server.js",
     "lint": "semistandard",
