@@ -27,8 +27,7 @@ function createOnePost (counter) {
 
   var imagecontainer = nodes.Node.create('div', {
     id: 'image_container' + counter,
-    class: 'pure-u-1-2 pure-g',
-    style: 'height: 250px; position: relative'
+    class: 'pure-u-1-2 pure-g'
   });
   var postimage = nodes.Node.create('img', {
     id: 'post_image' + counter,

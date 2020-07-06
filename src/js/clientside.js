@@ -72,10 +72,10 @@ function extension (filePath) {
             if (xhr.response.data[postCounter].filePath !== null) {
               if (extension(xhr.response.data[postCounter].filePath) === 'image/jpeg') {
                 console.log('Post mit ID ' + postCounter + ' hat BILDDATEN');
-                document.getElementById('image_container' + postCounter).style = 'height: 100%;';
                 document.getElementById('post_image' + postCounter).src = '/api/article/thumbnail/'.concat(postCounter + 1);
               }
               if (extension(xhr.response.data[postCounter].filePath) === 'application/json') {
+                document.getElementById('image_container' + postCounter).style = 'height: 250px; position: relative;';
                 console.log('Post mit ID ' + postCounter + ' hat KARTENDATEN');
                 const map = new L.Map('image_container' + postCounter, mapOptions);
                 // console.log(map);
@@ -116,6 +116,7 @@ function extension (filePath) {
                 console.log(map);
               }
             } else {
+              document.getElementById('image_container' + postCounter).style = 'height: 0;';
               console.log('Post mit ID ' + postCounter + ' hat KEIN Thumbnail');
             }
             postCounterThisSite++;
