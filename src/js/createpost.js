@@ -33,7 +33,13 @@ function createOnePost (counter) {
 
   nodes.Node.append([posttitle, posttime], header);
   nodes.Node.append([header, postimage, posttext], post);
-  element.appendChild(post);
+  try {
+    console.log('posting before');
+    element.insertBefore(post, document.getElementById('post' + (counter - 1)));
+  } catch (error) {
+    console.log('posting after');
+    element.appendChild(post);
+  }
   //  counter++;
 }
 function removeAllPosts () {

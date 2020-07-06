@@ -1,8 +1,10 @@
 const forms = require('./helper.js');
 
-var element = document.getElementById('posts');
+var element = document.getElementById('formHere');
 
 function openNewPostForm () {
+  document.body.scrollTop = 0; // For Safari
+  document.documentElement.scrollTop = 0; // for other browsers
   console.log(document.getElementById('form'));
   if (document.getElementById('form') === null) {
     var form = forms.Node.create('form', {
@@ -26,10 +28,9 @@ function openNewPostForm () {
     var text = forms.Node.create('label', {
       for: 'aligned-text'
     }, 'Text eingeben');
-    var textInput = forms.Node.create('input', {
+    var textInput = forms.Node.create('textarea', {
       id: 'content',
-      class: 'post-description',
-      type: 'text',
+      class: 'pure-input-1-2',
       placeholder: 'Post...'
     });
 
@@ -75,7 +76,7 @@ function openNewPostForm () {
     forms.Node.append([legend, pureControlGroup1, pureControlGroup2, pureControlGroup3, pureControls], fieldset);
     forms.Node.append([fieldset], form);
 
-    element.insertBefore(form, document.getElementById('post0'));
+    element.insertBefore(form, document.getElementById('posts'));
 
     document.getElementById('cancel').addEventListener('click', function (e) {
       deleteForm();
@@ -95,6 +96,7 @@ function openNewPostForm () {
         const result = await response.json();
 
         deleteForm();
+        document.getElementById('retrieve').click();
       } else {
           alert('Falscheingabe in einem Feld, bitte neu versuchen!');
       }
