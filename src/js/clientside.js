@@ -97,13 +97,13 @@ function extension (filePath) {
     // muss noch gecaped werden
     if (siteCounter / 10 + 1 < maxSites) {
       siteCounter += 10;
-      document.getElementById('retrieve').click();
+      update();
     }
   });
   prevSite.addEventListener('click', function (e) {
     if (siteCounter > 0) {
       siteCounter -= 10;
-      document.getElementById('retrieve').click();
+      update();
     }
   });
   document.addEventListener('DomLoaded', function () {
