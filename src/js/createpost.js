@@ -43,11 +43,13 @@ function createOnePost (counter) {
   //  counter++;
 }
 function removeAllPosts () {
+  /*
   var removeCounter = 0;
   while (document.getElementById('post' + removeCounter) !== null) {
     nodes.Node.remove(document.getElementById('post' + removeCounter));
     removeCounter++;
-  }
+  } */
+  document.getElementById('posts').innerHTML = '';
 }
 module.exports = {
   createOnePost: createOnePost,
