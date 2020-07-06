@@ -29,7 +29,6 @@ const upload = multer({ storage: storage, fileFilter: fileFilter });
 router.get('/articles', (req, res, next) => {
   var sql = 'select * from article';
   var params = [];
-  console.log('test');
   db.all(sql, params, (err, rows) => {
     if (err) {
       res.status(400).json({ error: err.message });
@@ -39,6 +38,20 @@ router.get('/articles', (req, res, next) => {
       message: 'success',
       data: rows
     });
+  });
+});
+
+router.get('/articles/count', (req, res, next) => {
+  var sql = 'select count(*) as count from article';
+  var params = [];
+  console.log('counts');
+  db.all(sql, params, (err, result) => {
+    if (err) {
+      res.status(400).json({ error: err.message });
+      return;
+    }
+    res.send(result[0]);
+    console.log(result[0]);
   });
 });
 
@@ -53,6 +66,7 @@ router.get('/article/thumbnail/:id', (req, res, next) => {
       res.sendFile(result.filePath);
     } catch (error) {
       console.log('Keine Thumbnail angegeben');
+      res.status(400).json({ error: error.message, message: 'Fehler' });
     }
   });
 });
