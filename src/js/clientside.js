@@ -113,6 +113,7 @@ function extension (filePath) {
                 console.log(map);
               }
             } else {
+              document.getElementById('image_container' + postCounter).style = 'height: 0;';
               console.log('Post mit ID ' + postCounter + ' hat KEIN Thumbnail');
               document.getElementById('image_container' + postCounter).style = 'height: 0;';
             }
