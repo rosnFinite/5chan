@@ -59,7 +59,7 @@ function extension (filePath) {
         while (postCounter >= 0) {
           // SeitenManipulation
           if (postCounterThisSite < 10) {
-            createPost.createOnePost(postCounter);
+            createPost.createOnePost(postCounter, xhr.response.data[postCounter].id);
             document.getElementById('post_title' + postCounter).innerHTML = xhr.response.data[postCounter].title;
             document.getElementById('post_text' + postCounter).innerHTML = xhr.response.data[postCounter].content;
             document.getElementById('post_timestamp' + postCounter).innerHTML = xhr.response.data[postCounter].timestamp;
@@ -67,14 +67,15 @@ function extension (filePath) {
               if (extension(xhr.response.data[postCounter].filePath) === 'image/jpeg') {
                 console.log('Post mit ID ' + postCounter + ' hat BILDDATEN');
                 document.getElementById('image_container' + postCounter).style = 'height: ';
-                document.getElementById('post_image' + postCounter).src = '/api/article/thumbnail/'.concat(postCounter + 1);
+                console.log('IDIDIDIDIDIDIDIDIDIDI:' + xhr.response.data[postCounter].id);
+                document.getElementById('post_image' + postCounter).src = '/api/article/thumbnail/'.concat(xhr.response.data[postCounter].id);
               }
               if (extension(xhr.response.data[postCounter].filePath) === 'application/json') {
                 const dataReq = new XMLHttpRequest();
                 console.log('Post mit ID ' + postCounter + ' hat KARTENDATEN');
                 document.getElementById('image_container' + postCounter).style = 'height: 250px; position: relative;';
                 // Verbindung zur API für Kartendaten
-                dataReq.open('GET', '/api/article/thumbnail/'.concat(postCounter + 1));
+                dataReq.open('GET', '/api/article/thumbnail/'.concat(xhr.response.data[postCounter].id));
                 dataReq.setRequestHeader('Content-Type', 'application/json');
                 dataReq.send();
                 // Init der Map

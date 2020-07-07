@@ -1,7 +1,7 @@
 const nodes = require('./helper.js');
 
 var element = document.getElementById('posts');
-function createOnePost (counter) {
+function createOnePost (counter, postId) {
   var post = nodes.Node.create('section', {
     id: 'post' + counter,
     class: 'post'
@@ -34,26 +34,37 @@ function createOnePost (counter) {
     class: 'pure-img',
     src: ''
   });
+  var deleteButton = nodes.Node.create('button', {
+    id: 'deleteButton' + counter,
+    class: 'pure-button',
+    type: 'button'
+  }, 'Löschen');
 
   nodes.Node.append([posttitle, posttime], header);
   nodes.Node.append([postimage], imagecontainer);
-  nodes.Node.append([header, imagecontainer, posttext], post);
+  nodes.Node.append([header, imagecontainer, posttext, deleteButton], post);
   try {
-    console.log('posting before');
     element.insertBefore(post, document.getElementById('post' + (counter - 1)));
   } catch (error) {
-    console.log('posting after');
     element.appendChild(post);
   }
+  // Delete Button Event Handler
+  document.getElementById('deleteButton' + counter).addEventListener('click', function (e) {
+    var XMLHttpRequest = require('xhr2');
+    const delReq = new XMLHttpRequest();
+    console.log('button id: ' + counter);
+    delReq.open('DELETE', '/api/article/' + (postId));
+    delReq.send();
+    delReq.onreadystatechange = function () {
+      if (this.readyState === 4 && this.status === 200) {
+        console.log('success button');
+        document.getElementById('retrieve').click();
+      }
+    };
+  });
   //  counter++;
 }
 function removeAllPosts () {
-  /*
-  var removeCounter = 0;
-  while (document.getElementById('post' + removeCounter) !== null) {
-    nodes.Node.remove(document.getElementById('post' + removeCounter));
-    removeCounter++;
-  } */
   document.getElementById('posts').innerHTML = '';
 }
 module.exports = {
