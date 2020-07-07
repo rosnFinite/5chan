@@ -85,6 +85,7 @@ function extension (filePath) {
               if (extension(xhr.response.data[postCounter].filePath) === 'application/json') {
                 const dataReq = new XMLHttpRequest();
                 console.log('Post mit ID ' + postCounter + ' hat KARTENDATEN');
+                document.getElementById('image_container' + postCounter).style = 'height: 250px; position: relative;';
                 dataReq.open('GET', '/api/article/thumbnail/'.concat(postCounter + 1));
                 dataReq.setRequestHeader('Content-Type', 'application/json');
                 dataReq.send();
@@ -115,7 +116,6 @@ function extension (filePath) {
             } else {
               document.getElementById('image_container' + postCounter).style = 'height: 0;';
               console.log('Post mit ID ' + postCounter + ' hat KEIN Thumbnail');
-              document.getElementById('image_container' + postCounter).style = 'height: 0;';
             }
             postCounterThisSite++;
           }
