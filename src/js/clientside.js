@@ -1,24 +1,11 @@
 
 const createPost = require('./createpost.js');
 const createForm = require('./newPostForm.js');
+const map = require('./map.js');
 const mime = require('mime-types');
-const L = require('leaflet');
 var siteCounter = 0;
 var maxSites = 0;
 
-var mapOptions = {
-  center: [49.777044, 6.579671],
-  zoom: 10
-};
-
-function latLong (coordinates) {
-  const coord = [];
-  coordinates.forEach(element => {
-    // coord.push(L.GeoJSON.coordsToLatLng(element));
-    coord.push([element[1], element[0], element[2]]);
-  });
-  return coord;
-}
 function extension (filePath) {
   return mime.lookup(filePath);
 }
@@ -86,32 +73,20 @@ function extension (filePath) {
                 const dataReq = new XMLHttpRequest();
                 console.log('Post mit ID ' + postCounter + ' hat KARTENDATEN');
                 document.getElementById('image_container' + postCounter).style = 'height: 250px; position: relative;';
+                // Verbindung zur API für Kartendaten
                 dataReq.open('GET', '/api/article/thumbnail/'.concat(postCounter + 1));
                 dataReq.setRequestHeader('Content-Type', 'application/json');
                 dataReq.send();
-                const map = new L.Map('image_container' + postCounter, mapOptions);
-                // console.log(map);
-                const layer = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                  maxZoom: 19,
-                  attribution: '&copy; OSM Mapnik <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-                }).addTo(map);
-                map.addLayer(layer);
-                console.log('JSON');
+                // Init der Map
+                const m = map.createMap('image_container' + postCounter);
+                // Laden der Kartendaten
                 dataReq.onreadystatechange = function () {
                   if (this.readyState === 4 && this.status === 200) {
-                    console.log('stateCHANGED inner IF');
                     const obj = JSON.parse(this.response);
-                    // const coord = latLong(obj.features[0].geometry.coordinates);
-                    // const group = new L.FeatureGroup(obj.features[0].geometry.coordinates);
-                    L.polyline(latLong(obj.features[0].geometry.coordinates), { color: 'red' }).addTo(map);
-                    // Marker hinzugügen (Icons fehlen noch)
-                    // L.marker(latLong(obj.features[0].geometry.coordinates)[0]).addTo(map);
-                    console.log('Map updated ' + obj.features[0].geometry.coordinates[0][1] + '    ' + obj.features[0].geometry.coordinates[0][0]);
-                    L.geoJSON(this.response.responseJSON).addTo(map);
-                    map.fitBounds(latLong(obj.features[0].geometry.coordinates));
+                    // Kartendaten der Map hinzufügen
+                    map.addData(m, obj);
                   }
                 };
-                console.log(map);
               }
             } else {
               document.getElementById('image_container' + postCounter).style = 'height: 0;';
