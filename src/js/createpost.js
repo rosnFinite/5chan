@@ -39,10 +39,14 @@ function createOnePost (counter, postId) {
     class: 'pure-button',
     type: 'button'
   }, 'Löschen');
-
+  var changeButton = nodes.Node.create('button', {
+    id: 'bearbeitenButton' + counter,
+    class: 'pure-button',
+    type: 'button'
+  }, 'Bearbeiten');
   nodes.Node.append([posttitle, posttime], header);
   nodes.Node.append([postimage], imagecontainer);
-  nodes.Node.append([header, imagecontainer, posttext, deleteButton], post);
+  nodes.Node.append([header, imagecontainer, posttext, changeButton, deleteButton], post);
   try {
     element.insertBefore(post, document.getElementById('post' + (counter - 1)));
   } catch (error) {
@@ -57,11 +61,25 @@ function createOnePost (counter, postId) {
     delReq.send();
     delReq.onreadystatechange = function () {
       if (this.readyState === 4 && this.status === 200) {
+        console.log('success button post' + counter);
+        element.removeChild(document.getElementById('post' + counter));
+      }
+    };
+  });
+  /* Bearbeiten Button Event Handler
+  document.getElementById('changeButton' + counter).addEventListener('click', function (e) {
+    var XMLHttpRequest = require('xhr2');
+    const delReq = new XMLHttpRequest();
+    console.log('button id: ' + counter);
+    delReq.open('Patch', '/api/article/' + (postId));
+    delReq.send();
+    delReq.onreadystatechange = function () {
+      if (this.readyState === 4 && this.status === 200) {
         console.log('success button');
         document.getElementById('retrieve').click();
       }
     };
-  });
+  }); */
   //  counter++;
 }
 function removeAllPosts () {
