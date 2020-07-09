@@ -27,8 +27,8 @@ const upload = multer({ storage: storage, fileFilter: fileFilter });
 
 // Liste aller Einträger der Datenbank
 router.get('/articles', (req, res, next) => {
-  var sql = 'select * from article';
-  var params = [];
+  const sql = 'select * from article';
+  const params = [];
   db.all(sql, params, (err, rows) => {
     if (err) {
       res.status(400).json({ error: err.message });
@@ -42,8 +42,8 @@ router.get('/articles', (req, res, next) => {
 });
 
 router.get('/articles/count', (req, res, next) => {
-  var sql = 'select count(*) as count from article';
-  var params = [];
+  const sql = 'select count(*) as count from article';
+  const params = [];
   console.log('counts');
   db.all(sql, params, (err, result) => {
     if (err) {
@@ -73,8 +73,8 @@ router.get('/article/thumbnail/:id', (req, res, next) => {
 
 // einzelner Artikel nach ID
 router.get('/article/:id', (req, res, next) => {
-  var sql = 'select * from article where id = ?';
-  var params = [req.params.id];
+  const sql = 'select * from article where id = ?';
+  const params = [req.params.id];
   db.get(sql, params, (err, row) => {
     if (err) {
       res.status(400).json({ error: err.message });
@@ -98,7 +98,7 @@ router.get('/article/:id', (req, res, next) => {
 router.post('/article/', upload.single('articleImage'), (req, res, next) => {
   // console.log(req.body);
   // console.log(req.file);
-  var errors = [];
+  const errors = [];
   if (!req.body.title) {
     errors.push('Kein Titel angegeben');
   }
@@ -116,8 +116,8 @@ router.post('/article/', upload.single('articleImage'), (req, res, next) => {
   } else {
     console.log('No Image');
   }
-  var sql = 'INSERT INTO article (timestamp, title, content, filePath) VALUES (?,?,?,?)';
-  var params = [data.timestamp, data.title, data.content, data.articleImage];
+  const sql = 'INSERT INTO article (timestamp, title, content, filePath) VALUES (?,?,?,?)';
+  const params = [data.timestamp, data.title, data.content, data.articleImage];
   db.run(sql, params, function (err, result) {
     if (err) {
       res.status(400).json({ error: err.message, message: 'Fehler' });

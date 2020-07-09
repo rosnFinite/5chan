@@ -1,74 +1,74 @@
 const forms = require('./helper.js');
 
-var element = document.getElementById('formHere');
+const element = document.getElementById('formHere');
 
 function openNewPostForm () {
   document.body.scrollTop = 0; // For Safari
   document.documentElement.scrollTop = 0; // for other browsers
   console.log(document.getElementById('form'));
   if (document.getElementById('form') === null) {
-    var form = forms.Node.create('form', {
+    const form = forms.Node.create('form', {
       id: 'form',
       class: 'pure-form pure-form-aligned'
     });
-    var fieldset = forms.Node.create('fieldset', {
+    const fieldset = forms.Node.create('fieldset', {
     });
-    var legend = forms.Node.create('legend', {
+    const legend = forms.Node.create('legend', {
     }, 'Neuen Post erstellen');
 
-    var title = forms.Node.create('label', {
+    const title = forms.Node.create('label', {
       id: 'form_title',
       for: 'aligned-title'
     }, 'Titel eingeben');
-    var titleInput = forms.Node.create('input', {
+    const titleInput = forms.Node.create('input', {
       id: 'aligned-title',
       placeholder: 'title',
       maxlength: '50'
     });
 
-    var text = forms.Node.create('label', {
+    const text = forms.Node.create('label', {
       for: 'aligned-text'
     }, 'Text eingeben');
-    var textInput = forms.Node.create('textarea', {
+    const textInput = forms.Node.create('textarea', {
       id: 'content',
       class: 'pure-input-1-2',
       placeholder: 'Post...',
       maxlength: '1026'
     });
-    var textCount = forms.Node.create('span', {
+    const textCount = forms.Node.create('span', {
       class: 'pure-form-message-inline',
       id: 'textCount'
     }, 'Zeichen übrig:  1024');
 
-    var file = forms.Node.create('label', {
+    const file = forms.Node.create('label', {
       for: 'aligned-file'
     }, 'Bild oder Json');
-    var fileInput = forms.Node.create('input', {
+    const fileInput = forms.Node.create('input', {
       id: 'aligned-file',
       class: 'post-file',
       type: 'file'
     });
 
-    var pureControls = forms.Node.create('div', {
+    const pureControls = forms.Node.create('div', {
       class: 'pure-controls'
     });
-    var pureControlGroup1 = forms.Node.create('div', {
+    const pureControlGroup1 = forms.Node.create('div', {
       class: 'pure-control-group'
     });
-    var pureControlGroup2 = forms.Node.create('div', {
+    const pureControlGroup2 = forms.Node.create('div', {
       class: 'pure-control-group'
     });
-    var pureControlGroup3 = forms.Node.create('div', {
+    const pureControlGroup3 = forms.Node.create('div', {
       class: 'pure-control-group'
     });
 
-    var submit = forms.Node.create('input', {
+    const submit = forms.Node.create('input', {
       id: 'submit',
       type: 'submit',
       class: 'pure-button pure-button-primary',
       value: 'Posten'
     });
-    var cancel = forms.Node.create('input', {
+    const cancel = forms.Node.create('input', {
       id: 'cancel',
       type: 'button',
       class: 'pure-button',
@@ -95,7 +95,7 @@ function openNewPostForm () {
     document.getElementById('form').onsubmit = async (e) => {
       e.preventDefault();
       if (document.getElementById('content').value !== '' && document.getElementById('aligned-title').value !== '') {
-        var formdata = new window.FormData();
+        const formdata = new window.FormData();
         formdata.append('content', document.getElementById('content').value);
         formdata.append('title', document.getElementById('aligned-title').value);
         formdata.append('articleImage', document.getElementById('aligned-file').files[0]);

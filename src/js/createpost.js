@@ -1,45 +1,45 @@
 const nodes = require('./helper.js');
 
-var element = document.getElementById('posts');
+const element = document.getElementById('posts');
 function createOnePost (counter, postId) {
-  var post = nodes.Node.create('section', {
+  const post = nodes.Node.create('section', {
     id: 'post' + counter,
     class: 'post'
   });
-  var header = nodes.Node.create('header', {
+  const header = nodes.Node.create('header', {
     class: 'post-header'
   });
 
-  var posttext = nodes.Node.create('div', {
+  const posttext = nodes.Node.create('div', {
     id: 'post_text' + counter,
     class: 'post-description'
   });
 
-  var posttitle = nodes.Node.create('h2', {
+  const posttitle = nodes.Node.create('h2', {
     id: 'post_title' + counter,
     class: 'post-title'
   });
 
-  var posttime = nodes.Node.create('p', {
+  const posttime = nodes.Node.create('p', {
     id: 'post_timestamp' + counter,
     class: 'post-meta'
   });
 
-  var imagecontainer = nodes.Node.create('div', {
+  const imagecontainer = nodes.Node.create('div', {
     id: 'image_container' + counter,
     class: 'pure-u-1-2 pure-g'
   });
-  var postimage = nodes.Node.create('img', {
+  const postimage = nodes.Node.create('img', {
     id: 'post_image' + counter,
     class: 'pure-img',
     src: ''
   });
-  var deleteButton = nodes.Node.create('button', {
+  const deleteButton = nodes.Node.create('button', {
     id: 'deleteButton' + counter,
     class: 'pure-button',
     type: 'button'
   }, 'Löschen');
-  var changeButton = nodes.Node.create('button', {
+  const changeButton = nodes.Node.create('button', {
     id: 'bearbeitenButton' + counter,
     class: 'pure-button',
     type: 'button'
@@ -54,7 +54,7 @@ function createOnePost (counter, postId) {
   }
   // Delete Button Event Handler
   document.getElementById('deleteButton' + counter).addEventListener('click', function (e) {
-    var XMLHttpRequest = require('xhr2');
+    const XMLHttpRequest = require('xhr2');
     const delReq = new XMLHttpRequest();
     console.log('button id: ' + counter);
     delReq.open('DELETE', '/api/article/' + (postId));

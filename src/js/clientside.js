@@ -10,12 +10,12 @@ function extension (filePath) {
   return mime.lookup(filePath);
 }
 (function () {
-  var retrieve = document.getElementById('retrieve');
-  var newPost = document.getElementById('newPost');
-  var nextSite = document.getElementById('nextSite');
-  var prevSite = document.getElementById('prevSite');
+  const retrieve = document.getElementById('retrieve');
+  const newPost = document.getElementById('newPost');
+  const nextSite = document.getElementById('nextSite');
+  const prevSite = document.getElementById('prevSite');
   console.log(createPost);
-  var toReadyStateDescription = function (state) {
+  const toReadyStateDescription = function (state) {
     switch (state) {
       case 0:
         return 'UNSENT';
@@ -36,21 +36,21 @@ function extension (filePath) {
 
   function update (e = null) {
     //  var bustCache = '?' + new Date().getTime();
-    var XMLHttpRequest = require('xhr2');
-    var oReq = new XMLHttpRequest();
+    const XMLHttpRequest = require('xhr2');
+    const oReq = new XMLHttpRequest();
     //  var imageSource;
     oReq.onload = function (e) {
-      var xhr = e.target;
+      const xhr = e.target;
       console.log('Inside the onload event');
       if (xhr.status >= 200 && xhr.status < 300) {
         // What do when the request is successful
         console.log('success!', xhr);
 
-        var postCounterThisSite = 0;
-        var postCounter = xhr.response.data.length - 1;
+        let postCounterThisSite = 0;
+        let postCounter = xhr.response.data.length - 1;
         maxSites = Math.floor(postCounter / 10) + 1;
         if (postCounter === -1) maxSites = 1;
-        var aktSite = (siteCounter / 10) + 1;
+        const aktSite = (siteCounter / 10) + 1;
         console.log(aktSite);
         document.getElementById('siteNumber').innerHTML = 'Seiten: ' + maxSites;
         document.getElementById('siteNumberAkt').innerHTML = 'Akt Seite: ' + aktSite;
