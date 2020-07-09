@@ -48,7 +48,8 @@ function extension (filePath) {
 
         var postCounterThisSite = 0;
         var postCounter = xhr.response.data.length - 1;
-        maxSites = Math.ceil(postCounter / 10);
+        maxSites = Math.floor(postCounter / 10) + 1;
+        if (postCounter === -1) maxSites = 1;
         var aktSite = (siteCounter / 10) + 1;
         console.log(aktSite);
         document.getElementById('siteNumber').innerHTML = 'Seiten: ' + maxSites;
@@ -114,7 +115,7 @@ function extension (filePath) {
   });
   nextSite.addEventListener('click', function (e) {
     // muss noch gecaped werden
-    if (siteCounter / 10 + 1 < maxSites) {
+    if ((siteCounter / 10 + 1) < maxSites) {
       siteCounter += 10;
       update();
     }

@@ -62,7 +62,8 @@ function createOnePost (counter, postId) {
     delReq.onreadystatechange = function () {
       if (this.readyState === 4 && this.status === 200) {
         console.log('success button post' + counter);
-        element.removeChild(document.getElementById('post' + counter));
+        document.getElementById('retrieve').click();
+        // element.removeChild(document.getElementById('post' + counter));
       }
     };
   });
