@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const db = require('./database.js');
+const check = require('express-validator').check;
 const path = require('path');
 const fs = require('fs');
 
@@ -93,9 +94,11 @@ router.get('/article/:id', (req, res, next) => {
     }
   });
 });
-
 // Artikel erstellen articleImageChange
-router.post('/article/', upload.single('articleImage'), (req, res, next) => {
+router.post('/article/', upload.single('articleImage'), [
+  check('data.title').escape(),
+  check('data.content').escape()
+], (req, res, next) => {
   // console.log(req.body);
   // console.log(req.file);
   const errors = [];
@@ -133,7 +136,10 @@ router.post('/article/', upload.single('articleImage'), (req, res, next) => {
 });
 
 // Artikel aktualisieren articleImageChange
-router.patch('/article/:id', upload.single('articleImage'), (req, res, next) => {
+router.patch('/article/:id', upload.single('articleImage'), [
+  check('data.title').escape(),
+  check('data.content').escape()
+], (req, res, next) => {
   // Veraltetes Bild aus Datei löschen
   if (req.file !== undefined) {
     db.get('SELECT filePath FROM article WHERE id = ?', req.params.id, (err, result) => {

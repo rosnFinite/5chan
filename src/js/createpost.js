@@ -32,7 +32,8 @@ function createOnePost (counter, postId) {
   const postimage = nodes.Node.create('img', {
     id: 'post_image' + counter,
     class: 'pure-img',
-    src: ''
+    src: '',
+    loading: 'lazy'
   });
   const deleteButton = nodes.Node.create('button', {
     id: 'deleteButton' + counter,

@@ -117,7 +117,6 @@ function extension (filePath) {
     createForm.openNewPostForm();
   });
   nextSite.addEventListener('click', function (e) {
-    // muss noch gecaped werden
     if ((siteCounter / 10 + 1) < maxSites) {
       siteCounter += 10;
       update();
