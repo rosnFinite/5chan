@@ -96,8 +96,8 @@ router.get('/article/:id', (req, res, next) => {
 });
 // Artikel erstellen articleImageChange
 router.post('/article/', upload.single('articleImage'), [
-  check('data.title').escape(),
-  check('data.content').escape()
+  check('title').escape(),
+  check('content').escape()
 ], (req, res, next) => {
   // console.log(req.body);
   // console.log(req.file);
