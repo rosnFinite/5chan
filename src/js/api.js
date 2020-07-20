@@ -137,8 +137,8 @@ router.post('/article/', upload.single('articleImage'), [
 
 // Artikel aktualisieren articleImageChange
 router.patch('/article/:id', upload.single('articleImage'), [
-  check('data.title').escape(),
-  check('data.content').escape()
+  check('title').escape(),
+  check('content').escape()
 ], (req, res, next) => {
   // Veraltetes Bild aus Datei löschen
   if (req.file !== undefined) {
