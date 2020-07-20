@@ -77,6 +77,8 @@ function extension (filePath) {
                 const dataReq = new XMLHttpRequest();
                 // console.log('Post mit ID ' + xhr.response.data[postCounter].id + ' hat KARTENDATEN');
                 document.getElementById('image_container' + postCounter).style = 'height: 250px; position: relative;';
+                const classImageCounter = document.getElementById('image_container' + postCounter);
+                classImageCounter.className = 'pure-u-1 pure-g';
                 // Verbindung zur API für Kartendaten
                 dataReq.open('GET', '/api/article/thumbnail/'.concat(xhr.response.data[postCounter].id));
                 dataReq.setRequestHeader('Content-Type', 'application/json');
