@@ -15,7 +15,8 @@ function createOnePost (counter, postId) {
 
   const posttext = nodes.Node.create('div', {
     id: 'post_text' + counter,
-    class: 'post-description'
+    class: 'post-description',
+    style: 'white-space: pre-wrap'
   });
 
   const posttitle = nodes.Node.create('h2', {
