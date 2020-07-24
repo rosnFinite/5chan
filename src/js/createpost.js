@@ -1,4 +1,7 @@
 const nodes = require('./helper.js');
+const createForm = require('./newPostForm.js');
+
+console.log(createForm);
 
 const element = document.getElementById('posts');
 function createOnePost (counter, postId) {
@@ -41,7 +44,7 @@ function createOnePost (counter, postId) {
     type: 'button'
   }, 'Löschen');
   const changeButton = nodes.Node.create('button', {
-    id: 'bearbeitenButton' + counter,
+    id: 'changeButton' + counter,
     class: 'pure-button',
     type: 'button'
   }, 'Bearbeiten');
@@ -68,21 +71,25 @@ function createOnePost (counter, postId) {
       }
     };
   });
-  /* Bearbeiten Button Event Handler
+  // Bearbeiten Button Event Handler
   document.getElementById('changeButton' + counter).addEventListener('click', function (e) {
     var XMLHttpRequest = require('xhr2');
-    const delReq = new XMLHttpRequest();
+    const getReq = new XMLHttpRequest();
     console.log('button id: ' + counter);
-    delReq.open('Patch', '/api/article/' + (postId));
-    delReq.send();
-    delReq.onreadystatechange = function () {
+    getReq.open('GET', '/api/article/' + (postId));
+    getReq.responseType = 'json';
+    getReq.send();
+    getReq.onreadystatechange = function () {
       if (this.readyState === 4 && this.status === 200) {
         console.log('success button');
-        document.getElementById('retrieve').click();
+        // Öffne newPostForm und belege Felder mit Werten
+        createForm.openNewPostForm(true, counter, postId);
+        document.getElementById('aligned-title').value = getReq.response.data.title;
+        document.getElementById('content').value = getReq.response.data.content;
       }
     };
-  }); */
-  //  counter++;
+  });
+  counter++;
 }
 function removeAllPosts () {
   document.getElementById('posts').innerHTML = '';

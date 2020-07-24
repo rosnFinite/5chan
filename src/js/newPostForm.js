@@ -2,9 +2,19 @@ const forms = require('./helper.js');
 
 const element = document.getElementById('formHere');
 
-function openNewPostForm () {
-  document.body.scrollTop = 0; // For Safari
-  document.documentElement.scrollTop = 0; // for other browsers
+function openNewPostForm (bearbeiten = false, counter = null, postId = null) {
+  // Grundlegende Änderungen des Aufbaus je nach befehl
+  let titleString = '';
+  let postString = '';
+  if (!bearbeiten) {
+    document.body.scrollTop = 0; // For Safari
+    document.documentElement.scrollTop = 0; // for other browsers
+    titleString = 'Neuen Post erstellen';
+    postString = 'Posten';
+  } else {
+    titleString = 'Post bearbeiten';
+    postString = 'Bearbeiten';
+  }
   console.log(document.getElementById('form'));
   if (document.getElementById('form') === null) {
     const form = forms.Node.create('form', {
@@ -13,8 +23,9 @@ function openNewPostForm () {
     });
     const fieldset = forms.Node.create('fieldset', {
     });
+    // Titel ändern
     const legend = forms.Node.create('legend', {
-    }, 'Neuen Post erstellen');
+    }, titleString);
 
     const title = forms.Node.create('label', {
       id: 'form_title',
@@ -66,7 +77,7 @@ function openNewPostForm () {
       id: 'submit',
       type: 'submit',
       class: 'pure-button pure-button-primary',
-      value: 'Posten'
+      value: postString
     });
     const cancel = forms.Node.create('input', {
       id: 'cancel',
@@ -81,8 +92,12 @@ function openNewPostForm () {
     forms.Node.append([file, fileInput], pureControlGroup3);
     forms.Node.append([legend, pureControlGroup1, pureControlGroup2, pureControlGroup3, pureControls], fieldset);
     forms.Node.append([fieldset], form);
-
-    element.insertBefore(form, document.getElementById('posts'));
+    // Position der Form, je nach Befehl
+    if (bearbeiten === true) {
+      document.getElementById('posts').insertBefore(form, document.getElementById('post' + (counter - 1)));
+    } else {
+      element.insertBefore(form, document.getElementById('posts'));
+    }
 
     document.getElementById('cancel').addEventListener('click', function (e) {
       deleteForm();
@@ -94,22 +109,41 @@ function openNewPostForm () {
     // Form Submit
     document.getElementById('form').onsubmit = async (e) => {
       e.preventDefault();
-      if (document.getElementById('content').value !== '' && document.getElementById('aligned-title').value !== '') {
-        const formdata = new window.FormData();
-        formdata.append('content', document.getElementById('content').value);
-        formdata.append('title', document.getElementById('aligned-title').value);
-        formdata.append('articleImage', document.getElementById('aligned-file').files[0]);
-        const response = await window.fetch('/api/article', {
-          method: 'POST',
-          body: formdata
-        });
-
-        const result = await response.json();
-        console.log(result);
-        deleteForm();
-        document.getElementById('retrieve').click();
+      // Je nach Modus, entweder Posten, oder aktuellen Post bearbeiten
+      if (bearbeiten === false) {
+        if (document.getElementById('content').value !== '' && document.getElementById('aligned-title').value !== '') {
+          const formdata = new window.FormData();
+          formdata.append('content', document.getElementById('content').value);
+          formdata.append('title', document.getElementById('aligned-title').value);
+          formdata.append('articleImage', document.getElementById('aligned-file').files[0]);
+          const response = await window.fetch('/api/article', {
+            method: 'POST',
+            body: formdata
+          });
+          const result = await response.json();
+          console.log(result);
+          deleteForm();
+          document.getElementById('retrieve').click();
+        } else {
+          window.alert('Falscheingabe in einem Feld, bitte neu versuchen!');
+        }
       } else {
-        window.alert('Falscheingabe in einem Feld, bitte neu versuchen!');
+        if (document.getElementById('content').value !== '' && document.getElementById('aligned-title').value !== '') {
+          const formdata = new window.FormData();
+          formdata.append('content', document.getElementById('content').value);
+          formdata.append('title', document.getElementById('aligned-title').value);
+          formdata.append('articleImage', document.getElementById('aligned-file').files[0]);
+          const response = await window.fetch('/api/article/' + postId, {
+            method: 'PATCH',
+            body: formdata
+          });
+          const result = await response.json();
+          console.log(result);
+          deleteForm();
+          document.getElementById('retrieve').click();
+        } else {
+          window.alert('Falscheingabe in einem Feld, bitte neu versuchen!');
+        }
       }
     };
   }
