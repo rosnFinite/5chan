@@ -57,7 +57,6 @@ function createOnePost (counter, postId) {
   } catch (error) {
     element.appendChild(post);
   }
-  // Delete Button Event Handler
   document.getElementById('deleteButton' + counter).addEventListener('click', function (e) {
     const XMLHttpRequest = require('xhr2');
     const delReq = new XMLHttpRequest();
