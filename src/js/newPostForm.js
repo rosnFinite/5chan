@@ -1,4 +1,5 @@
 const forms = require('./helper.js');
+const autosize = require('autosize');
 
 const element = document.getElementById('formHere');
 
@@ -113,6 +114,8 @@ function openNewPostForm (bearbeiten = false, counter = null, postId = null) {
   // Word Counter
   document.getElementById('content').onkeyup = function () {
     document.getElementById('textCount').innerHTML = 'Zeichen übrig: ' + (1024 - this.value.length);
+    // Anpassen der TextArea an EingabeLänge
+    autosize(document.getElementById('content'));
   };
   // Form Submit
   document.getElementById('form').onsubmit = async (e) => {
