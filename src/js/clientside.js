@@ -57,7 +57,7 @@ function extension (filePath) {
         // cleanup
         createPost.removeAllPosts();
         postCounter -= siteCounter;
-        // Erstellung der max 10 Posts
+        // Erstellung von max 10 Posts
         while (postCounter >= 0) {
           // SeitenManipulation
           if (postCounterThisSite < 10) {
@@ -84,12 +84,13 @@ function extension (filePath) {
                 dataReq.setRequestHeader('Content-Type', 'application/json');
                 dataReq.send();
                 // Init der Map
+                // Parameter entsprechen umschließenden Container
                 const m = map.createMap('image_container' + postCounter);
                 // Laden der Kartendaten
                 dataReq.onreadystatechange = function () {
                   if (this.readyState === 4 && this.status === 200) {
                     const obj = JSON.parse(this.response);
-                    // Kartendaten der Map hinzufügen
+                    // GeoJSON der Map hinzufügen
                     map.addData(m, obj);
                   }
                 };
