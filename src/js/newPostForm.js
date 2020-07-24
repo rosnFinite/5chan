@@ -103,6 +103,10 @@ function openNewPostForm (bearbeiten = false, counter = null, postId = null) {
 
     document.getElementById('cancel').addEventListener('click', function (e) {
       deleteForm();
+      if (bearbeiten) {
+        document.getElementById('changeButton' + (counter - 1)).style.visibility = 'visible';
+        document.getElementById('deleteButton' + (counter - 1)).style.visibility = 'visible';
+      }
     });
     // Word Counter
     document.getElementById('content').onkeyup = function () {
