@@ -79,6 +79,8 @@ function createOnePost (counter, postId) {
     getReq.open('GET', '/api/article/' + (postId));
     getReq.responseType = 'json';
     getReq.send();
+    document.getElementById('changeButton' + (counter - 1)).style.visibility = 'hidden';
+    document.getElementById('deleteButton' + (counter - 1)).style.visibility = 'hidden';
     getReq.onreadystatechange = function () {
       if (this.readyState === 4 && this.status === 200) {
         console.log('success button');

@@ -94,7 +94,9 @@ function openNewPostForm (bearbeiten = false, counter = null, postId = null) {
     forms.Node.append([fieldset], form);
     // Position der Form, je nach Befehl
     if (bearbeiten === true) {
-      document.getElementById('posts').insertBefore(form, document.getElementById('post' + (counter - 1)));
+      // document.getElementById('posts').insertBefore(form, document.getElementById('post' + (counter - 1)));
+      console.log(counter);
+      document.getElementById('post_text' + (counter - 1)).append(form);
     } else {
       element.insertBefore(form, document.getElementById('posts'));
     }
@@ -140,6 +142,9 @@ function openNewPostForm (bearbeiten = false, counter = null, postId = null) {
           const result = await response.json();
           console.log(result);
           deleteForm();
+          // Zeige Buttons wieder
+          document.getElementById('changeButton' + (counter - 1)).style.visibility = 'visible';
+          document.getElementById('deleteButton' + (counter - 1)).style.visibility = 'visible';
           document.getElementById('retrieve').click();
         } else {
           window.alert('Falscheingabe in einem Feld, bitte neu versuchen!');
