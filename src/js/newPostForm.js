@@ -33,16 +33,16 @@ function openNewPostForm (bearbeiten = false, counter = null, postId = null) {
   const title = forms.Node.create('label', {
     id: 'form_title',
     for: 'aligned-title'
-  }, 'Titel eingeben');
+  }, 'Titel');
   const titleInput = forms.Node.create('input', {
     id: 'aligned-title',
-    placeholder: 'title',
+    placeholder: 'Titel...',
     maxlength: '50'
   });
 
   const text = forms.Node.create('label', {
     for: 'aligned-text'
-  }, 'Text eingeben');
+  }, 'Text');
   const textInput = forms.Node.create('textarea', {
     id: 'content',
     class: 'pure-input-1-2',
@@ -53,10 +53,14 @@ function openNewPostForm (bearbeiten = false, counter = null, postId = null) {
     class: 'pure-form-message-inline',
     id: 'textCount'
   }, 'Zeichen übrig:  1024');
+  const dateiInfo = forms.Node.create('span', {
+    class: 'pure-form-message-inline',
+    id: 'dateiInfo'
+  }, 'JPG(Bild) oder JSON(Karte) Format');
 
   const file = forms.Node.create('label', {
     for: 'aligned-file'
-  }, 'Bild oder Json');
+  }, 'Datei');
   const fileInput = forms.Node.create('input', {
     id: 'aligned-file',
     class: 'post-file',
@@ -92,7 +96,7 @@ function openNewPostForm (bearbeiten = false, counter = null, postId = null) {
   forms.Node.append([submit, cancel], pureControls);
   forms.Node.append([title, titleInput], pureControlGroup1);
   forms.Node.append([text, textInput, textCount], pureControlGroup2);
-  forms.Node.append([file, fileInput], pureControlGroup3);
+  forms.Node.append([file, fileInput, dateiInfo], pureControlGroup3);
   forms.Node.append([legend, pureControlGroup1, pureControlGroup2, pureControlGroup3, pureControls], fieldset);
   forms.Node.append([fieldset], form);
   // Position der Form, je nach Befehl
@@ -112,10 +116,11 @@ function openNewPostForm (bearbeiten = false, counter = null, postId = null) {
     }
   });
   // Word Counter
-  document.getElementById('content').onkeyup = function () {
+  const content = document.getElementById('content');
+  content.onkeyup = function () {
     document.getElementById('textCount').innerHTML = 'Zeichen übrig: ' + (1024 - this.value.length);
     // Anpassen der TextArea an EingabeLänge
-    autosize(document.getElementById('content'));
+    autosize(content);
   };
   // Form Submit
   document.getElementById('form').onsubmit = async (e) => {
