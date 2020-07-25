@@ -31,7 +31,7 @@ function createOnePost (counter, postId) {
 
   const imagecontainer = nodes.Node.create('div', {
     id: 'image_container' + counter,
-    class: 'pure-u-1-2 pure-g'
+    class: 'pure-u-1 pure-u-lg-1-2'
   });
   const postimage = nodes.Node.create('img', {
     id: 'post_image' + counter,

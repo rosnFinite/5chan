@@ -37,7 +37,8 @@ function openNewPostForm (bearbeiten = false, counter = null, postId = null) {
   const titleInput = forms.Node.create('input', {
     id: 'aligned-title',
     placeholder: 'Titel...',
-    maxlength: '50'
+    maxlength: '50',
+    class: 'pure-input-1-2'
   });
 
   const text = forms.Node.create('label', {
@@ -56,7 +57,7 @@ function openNewPostForm (bearbeiten = false, counter = null, postId = null) {
   const dateiInfo = forms.Node.create('span', {
     class: 'pure-form-message-inline',
     id: 'dateiInfo'
-  }, 'JPG(Bild) oder JSON(Karte) Format');
+  }, '.JPG / .JSON');
 
   const file = forms.Node.create('label', {
     for: 'aligned-file'
