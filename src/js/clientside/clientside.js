@@ -132,12 +132,16 @@ function extension (filePath) {
     if ((siteCounter / 10 + 1) < maxSites) {
       siteCounter += 10;
       update();
+      document.body.scrollTop = 0; // For Safari
+      document.documentElement.scrollTop = 0; // for other browsers
     }
   });
   prevSite.addEventListener('click', function (e) {
     if (siteCounter > 0) {
       siteCounter -= 10;
       update();
+      document.body.scrollTop = 0; // For Safari
+      document.documentElement.scrollTop = 0; // for other browsers
     }
   });
   document.addEventListener('DomLoaded', function () {
