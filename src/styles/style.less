@@ -37,6 +37,15 @@ h3 {
 .pure-button-primary {
     background-color: rgb(17, 94, 103);
 }
+
+.pure-button {
+    margin-right: 1em;
+}
+.nav-button {
+    margin-left: 1em;
+    margin
+}
+
 .header {
     text-align: center;
     top: auto;
@@ -54,11 +63,64 @@ h3 {
 }
 .brand-title {
     text-transform: uppercase;
+    text-align: center;
+    font-size: 10vw;
 }
 .brand-tagline {
     font-weight: 300;
     color: rgb(176, 202, 219);
 }
+
+.siteNavigation {
+    display: flex;
+    justify-content:space-evenly ;
+    margin-top: -5%;
+}
+
+.site-Number {
+    margin-top: 12%;
+    font-size: 2em;
+}
+
+.arrow {
+    position: relative;
+    margin-top: 15%;
+	//top: 20%;
+	width: 5vmin;
+	height: 5vmin;
+	background: transparent;
+	border-top: 1vmin solid white;
+	border-right: 1vmin solid white;
+	box-shadow: 0 0 0 lightgray;
+	transition: all 200ms ease;
+
+	&.left {
+		left: 0;
+		transform: translate3d(0, -50%, 0) rotate(-135deg);
+	}
+
+	&.right {
+		right: 0;
+		transform: translate3d(0, -50%, 0) rotate(45deg);
+	}
+
+	&:hover {
+		border-color: rgb(56, 186, 226);
+		box-shadow: 0.5vmin -0.5vmin 0 white;
+	}
+
+	&:before {
+		// for better hit area
+		content: "";
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-40%, -60%) rotate(45deg);
+		width: 200%;
+		height: 200%;
+	}
+}
+
 
 .nav-list {
     margin: 0;
@@ -115,7 +177,7 @@ h3 {
     margin-left: 1em;
 }
 .post-description {
-    font-family: Georgia, "Cambria", serif;
+    //font-family: Georgia, "Cambria", serif;
     color: #444;
     line-height: 1.8em;
 }
@@ -168,6 +230,12 @@ h3 {
 }
 
 @media (min-width: 48em) {
+
+    .brand-title {
+        font-size: 3vw;
+        margin-left: -9%;
+    }
+
     .content {
         padding: 2em 3em 0;
         margin-left: 25%;
@@ -181,7 +249,21 @@ h3 {
     .sidebar {
         position: fixed;
         top: 0;
-        bottom: 0;
+        bottom: -20;
+    }
+
+    .site-Number {
+        margin-top: 3em;
+    }
+
+    .siteNavigation {
+        margin-top: 0;
+    }
+
+    .arrow {
+        margin-top: 7em;
+        width: 2.5vmin;
+        height: 2.5vmin;
     }
 
     .footer {

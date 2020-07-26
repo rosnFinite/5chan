@@ -52,8 +52,8 @@ function extension (filePath) {
         if (postCounter === -1) maxSites = 1;
         const aktSite = (siteCounter / 10) + 1;
 
-        document.getElementById('siteNumber').innerHTML = 'Seiten: ' + maxSites;
-        document.getElementById('siteNumberAkt').innerHTML = 'Akt Seite: ' + aktSite;
+        document.getElementById('siteNumber').innerHTML = '' + maxSites;
+        document.getElementById('siteNumberAkt').innerHTML = '' + aktSite;
         // cleanup
         createPost.removeAllPosts();
         postCounter -= siteCounter;

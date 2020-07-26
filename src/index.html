@@ -11,25 +11,35 @@
             <div class="sidebar pure-u-1 pure-u-md-1-4 pure-u-lg-5-24">
                 <div class="header">
                     <h1 class="brand-title">MicroBlog</h1>
+                    <!--
                     <h2 id="siteNumber" class="brand-tagline"></h2>
                     <h2 id="siteNumberAkt" class="brand-tagline"></h2>
-        
+                    -->
                     <nav class="nav">
                         <ul class="nav-list">
                             <li class="nav-item">
-                                <a id="retrieve"class="pure-button" >Aktualisieren</a>
+                                <a id="retrieve"class="pure-button nav-button" >Aktualisieren</a>
                             </li>
                             <li class="nav-item">
-                                <a id="newPost"class="pure-button" >Neuer Post</a>
+                                <a id="newPost"class="pure-button nav-button" >Neuer Post</a>
                             </li>
+                            <!--
                             <li class="nav-item">
                                 <a id="prevSite"class="pure-button" >Letzte Seite</a>
                             </li>
                             <li class="nav-item">
                                 <a id="nextSite"class="pure-button" >Nächste Seite</a>
                             </li>
+                            -->
                         </ul>
                     </nav>
+                    <div class="siteNavigation">
+                        <a id="prevSite"class="arrow left" ></a>
+                        <p id="siteNumberAkt" class="site-Number"></p>
+                        <p class="site-Number"> / </p>
+                        <p id="siteNumber" class="site-Number"></p>
+                        <a id="nextSite"class="arrow right" ></a>
+                    </div>
                 </div>
             </div>
             <div class="content pure-u-1 pure-u-md-3-4 pure-u-lg-17-24">    
