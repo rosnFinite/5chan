@@ -159,7 +159,6 @@ router.patch('/article/:id', upload.single('articleImage'), [
     });
   }
   var data = {
-    timestamp: new Date().toISOString(),
     title: req.body.title,
     content: req.body.content,
     articleImage: req.file !== undefined ? req.file.path : null
@@ -168,7 +167,7 @@ router.patch('/article/:id', upload.single('articleImage'), [
 
   // Aktualisierung des Datenbankeintrags
   db.run(
-    'UPDATE article SET timestamp = ?, title = COALESCE(?,title), content = COALESCE(?,content), filePath = COALESCE(?,filePath) WHERE id = ?',
+    'UPDATE article SET timestamp = COALESCE(?,timestamp), title = COALESCE(?,title), content = COALESCE(?,content), filePath = COALESCE(?,filePath) WHERE id = ?',
     [data.timestamp, data.title, data.content, data.articleImage, req.params.id],
     function (err, result) {
       if (err) {
