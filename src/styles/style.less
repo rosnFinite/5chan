@@ -31,6 +31,24 @@ h3 {
     height: auto;
 }
 
+.gradient-background {
+    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+}
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
 #layout {
     padding: 0;
 }
@@ -38,12 +56,44 @@ h3 {
     background-color: rgb(17, 94, 103);
 }
 
+.btn {
+    text-decoration: none;
+    border: 1px solid rgb(185, 185, 235);
+    position: relative;
+    overflow: hidden;
+}
+  
+  // Button
+.btn:hover {
+    box-shadow: 1px 1px 25px 10px rgba(161, 12, 219, 0.4);
+}
+  
+.btn:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      120deg,
+      transparent,
+      rgba(203, 170, 216, 0.4),
+      transparent
+    );
+    transition: all 650ms;
+}
+  
+.btn:hover:before {
+    left: 100%;
+}
+
+
 .pure-button {
     margin-right: 1em;
 }
 .nav-button {
     margin-left: 1em;
-    margin
 }
 
 .header {
@@ -53,7 +103,7 @@ h3 {
 }
 
 .sidebar {
-    background: rgb(17, 94, 103);
+    //background: rgb(17, 94, 103);
     color: #fff;
 }
 
@@ -141,7 +191,7 @@ h3 {
 	width: auto;
     letter-spacing: 0.05em;
     text-transform: uppercase;
-    font-size: 85%;
+    font-size: 140%;
 }
 .nav-item a:hover,
 .nav-item a:focus {
@@ -241,6 +291,36 @@ h3 {
         margin-left: 25%;
     }
 
+    .nav-item a {
+        font-size: 1.3vw;
+    }
+
+    .pure-button {
+        margin-right: 0.5em;
+    }
+    .nav-button {
+        margin-left: 0.5em;
+    }
+
+    // Sidebar Hintergrund
+    .gradient-background {
+        background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+        background-size: 400% 400%;
+        animation: gradient 15s ease infinite;
+    }
+    
+    @keyframes gradient {
+        0% {
+            background-position: 0% 50%;
+        }
+        50% {
+            background-position: 100% 50%;
+        }
+        100% {
+            background-position: 0% 50%;
+        }
+    }
+
     .header {
         margin: 80% 2em 0;
         text-align: right;
@@ -264,6 +344,10 @@ h3 {
         margin-top: 7em;
         width: 2.5vmin;
         height: 2.5vmin;
+    }
+
+    .image-size {
+        width: 30vw;
     }
 
     .footer {

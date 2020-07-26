@@ -41,12 +41,12 @@ function createOnePost (counter, postId) {
   });
   const deleteButton = nodes.Node.create('button', {
     id: 'deleteButton' + counter,
-    class: 'pure-button',
+    class: 'btn pure-button',
     type: 'button'
   }, 'Löschen');
   const changeButton = nodes.Node.create('button', {
     id: 'changeButton' + counter,
-    class: 'pure-button',
+    class: 'btn pure-button',
     type: 'button'
   }, 'Bearbeiten');
   nodes.Node.append([posttitle, posttime], header);

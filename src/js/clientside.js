@@ -69,7 +69,7 @@ function extension (filePath) {
             if (xhr.response.data[postCounter].filePath !== null) {
               if (extension(xhr.response.data[postCounter].filePath) === 'image/jpeg') {
                 // console.log('Post mit ID ' + xhr.response.data[postCounter].id + ' hat BILDDATEN');
-                document.getElementById('image_container' + postCounter).style = 'height: ';
+                document.getElementById('image_container' + postCounter).className += ' image-size';
                 const url = '/api/article/thumbnail/'.concat(xhr.response.data[postCounter].id);
                 const random = '?'.concat(Date.now());
                 console.log(url.concat(random));
