@@ -50,8 +50,13 @@ function extension (filePath) {
         let postCounter = xhr.response.data.length - 1;
         maxSites = Math.floor(postCounter / 10) + 1;
         if (postCounter === -1) maxSites = 1;
-        const aktSite = (siteCounter / 10) + 1;
+        let aktSite = (siteCounter / 10) + 1;
 
+        // Falls letzer BlogPost auf Seite gelöscht wird, eine Seite zurückspringen
+        if (aktSite > maxSites) {
+          siteCounter -= 10;
+          aktSite = maxSites;
+        }
         document.getElementById('siteNumber').innerHTML = '' + maxSites;
         document.getElementById('siteNumberAkt').innerHTML = '' + aktSite;
         // cleanup
