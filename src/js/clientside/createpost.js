@@ -2,7 +2,7 @@ const nodes = require('./helper.js');
 const createForm = require('./newPostForm.js');
 
 console.log(createForm);
-
+// Html Elemte dynamisch generieren
 const element = document.getElementById('posts');
 function createOnePost (counter, postId) {
   const post = nodes.Node.create('section', {
@@ -49,6 +49,7 @@ function createOnePost (counter, postId) {
     class: 'btn pure-button',
     type: 'button'
   }, 'Bearbeiten');
+  // An ParentNode anheften
   nodes.Node.append([posttitle, posttime], header);
   nodes.Node.append([postimage], imagecontainer);
   nodes.Node.append([header, imagecontainer, posttext, changeButton, deleteButton], post);
@@ -57,6 +58,7 @@ function createOnePost (counter, postId) {
   } catch (error) {
     element.appendChild(post);
   }
+  // Delete Button Event Handler
   document.getElementById('deleteButton' + counter).addEventListener('click', function (e) {
     const XMLHttpRequest = require('xhr2');
     const delReq = new XMLHttpRequest();
@@ -79,6 +81,7 @@ function createOnePost (counter, postId) {
     getReq.open('GET', '/api/article/' + (postId));
     getReq.responseType = 'json';
     getReq.send();
+    // Andere Buttons des Posts Hidden
     document.getElementById('changeButton' + (counter - 1)).style.visibility = 'hidden';
     document.getElementById('deleteButton' + (counter - 1)).style.visibility = 'hidden';
     getReq.onreadystatechange = function () {

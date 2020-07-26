@@ -2,13 +2,13 @@
   "name": "5chan",
   "version": "1.0.0",
   "description": "",
-  "main": "./src/js/server.js",
+  "main": "./src/js/serverside/server.js",
   "scripts": {
-    "build": "npm run lint &&browserify ./src/js/clientside.js -o ./build/test.js &&  terser ./build/test.js > ./build/bundle.js && node -e \"require('fs').unlinkSync('./build/test.js')\" && npm run build:less",
+    "build": "npm run lint &&browserify ./src/js/clientside/clientside.js -o ./build/test.js &&  terser ./build/test.js > ./build/bundle.js && node -e \"require('fs').unlinkSync('./build/test.js')\" && npm run build:less",
     "build:less": "./node_modules/.bin/lessc --clean-css ./src/styles/style.less ./build/style.min.css",
-    "debug": "npm run lint &&browserify ./src/js/clientside.js -o ./build/bundle.js && lessc ./src/styles/style.less ./build/style.min.css",
-    "start": "node ./src/js/server.js",
-    "startDev": "nodemon ./src/js/server.js",
+    "debug": "npm run lint &&browserify ./src/js/clientside/clientside.js -o ./build/bundle.js && lessc ./src/styles/style.less ./build/style.min.css",
+    "start": "node ./src/js/serverside/server.js",
+    "startDev": "nodemon ./src/js/serverside/server.js",
     "lint": "semistandard",
     "clean": "node -e \"require('fs').rmdirSync('./build', { recursive: true })\"  && node -e \"require('fs').rmdirSync('./node_modules', { recursive: true })\" && node -e \"require('fs').rmdirSync('./db.sqlite3', { recursive: true })\"  && node -e \"require('fs').rmdirSync('./uploads', { recursive: true })\" && node -e \"require('fs').mkdirSync('./uploads', { recursive: true })\""
   },

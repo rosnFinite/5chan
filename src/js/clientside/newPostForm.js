@@ -93,7 +93,7 @@ function openNewPostForm (bearbeiten = false, counter = null, postId = null) {
     class: 'pure-button',
     value: 'Abbrechen'
   });
-
+  // Html childNodes an ParentNode hängen
   forms.Node.append([submit, cancel], pureControls);
   forms.Node.append([title, titleInput], pureControlGroup1);
   forms.Node.append([text, textInput, textCount], pureControlGroup2);
@@ -102,13 +102,12 @@ function openNewPostForm (bearbeiten = false, counter = null, postId = null) {
   forms.Node.append([fieldset], form);
   // Position der Form, je nach Befehl
   if (bearbeiten === true) {
-    // document.getElementById('posts').insertBefore(form, document.getElementById('post' + (counter - 1)));
     console.log(counter);
     document.getElementById('post_text' + (counter - 1)).append(form);
   } else {
     element.insertBefore(form, document.getElementById('posts'));
   }
-
+  // cancel Button Event Handler
   document.getElementById('cancel').addEventListener('click', function (e) {
     deleteForm();
     if (bearbeiten) {

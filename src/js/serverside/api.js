@@ -10,7 +10,7 @@ const multer = require('multer');
 const storage = multer.diskStorage({
   // Speicherpfad innerhalb des Projekts
   destination: function (req, file, cb) {
-    cb(null, path.join(__dirname, '../../uploads/'));
+    cb(null, path.join(__dirname, '../../../uploads/'));
   },
   filename: function (req, file, cb) {
     const now = new Date().toISOString(); const date = now.replace(/:/g, '-'); cb(null, date + file.originalname);

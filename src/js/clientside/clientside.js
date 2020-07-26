@@ -60,30 +60,30 @@ function extension (filePath) {
         // Erstellung von max 10 Posts
         while (postCounter >= 0) {
           // SeitenManipulation
+          const postData = xhr.response.data[postCounter];
           if (postCounterThisSite < 10) {
-            createPost.createOnePost(postCounter, xhr.response.data[postCounter].id);
-            document.getElementById('post_title' + postCounter).innerHTML = xhr.response.data[postCounter].title;
-            document.getElementById('post_text' + postCounter).innerHTML = xhr.response.data[postCounter].content;
-            document.getElementById('post_timestamp' + postCounter).innerHTML = xhr.response.data[postCounter].timestamp;
+            createPost.createOnePost(postCounter, postData.id);
+            document.getElementById('post_title' + postCounter).innerHTML = postData.title;
+            document.getElementById('post_text' + postCounter).innerHTML = postData.content;
+            document.getElementById('post_timestamp' + postCounter).innerHTML = postData.timestamp;
 
-            if (xhr.response.data[postCounter].filePath !== null) {
-              if (extension(xhr.response.data[postCounter].filePath) === 'image/jpeg') {
-                // console.log('Post mit ID ' + xhr.response.data[postCounter].id + ' hat BILDDATEN');
+            const classImageCounter = document.getElementById('image_container' + postCounter);
+            if (postData.filePath !== null) {
+              // Falls Bild
+              if (extension(postData.filePath) === 'image/jpeg') {
                 document.getElementById('image_container' + postCounter).className += ' image-size';
-                const url = '/api/article/thumbnail/'.concat(xhr.response.data[postCounter].id);
+                const url = '/api/article/thumbnail/'.concat(postData.id);
                 const random = '?'.concat(Date.now());
                 console.log(url.concat(random));
                 document.getElementById('post_image' + postCounter).src = url.concat(random);
               }
-
-              if (extension(xhr.response.data[postCounter].filePath) === 'application/json') {
+              // Falls Karte
+              if (extension(postData.filePath) === 'application/json') {
                 const dataReq = new XMLHttpRequest();
-                // console.log('Post mit ID ' + xhr.response.data[postCounter].id + ' hat KARTENDATEN');
-                document.getElementById('image_container' + postCounter).style = 'height: 250px; position: relative;';
-                const classImageCounter = document.getElementById('image_container' + postCounter);
+                classImageCounter.style = 'height: 250px; position: relative;';
                 classImageCounter.className = 'pure-u-1 pure-g';
                 // Verbindung zur API für Kartendaten
-                dataReq.open('GET', '/api/article/thumbnail/'.concat(xhr.response.data[postCounter].id));
+                dataReq.open('GET', '/api/article/thumbnail/'.concat(postData.id));
                 dataReq.setRequestHeader('Content-Type', 'application/json');
                 dataReq.send();
                 // Init der Map
@@ -99,12 +99,12 @@ function extension (filePath) {
                 };
               }
             } else {
-              document.getElementById('image_container' + postCounter).style = 'height: 0;';
-              // console.log('Post mit ID ' + postCounter + ' hat KEIN Thumbnail');
+              // Image Container wird versteckt, falls kein Image und keine Karte
+              classImageCounter.style = 'height: 0;';
             }
             postCounterThisSite++;
           }
-
+          // Post Id wird runtergezählt, nächster Post wird betrachtet
           postCounter--;
         }
       }
@@ -118,6 +118,7 @@ function extension (filePath) {
     oReq.setRequestHeader('x-retrievetest', '1.0');
     oReq.send();
   }
+  // ButtonHandler für alle Buttons
   newPost.addEventListener('click', function (e) {
     console.log('newPost');
     createForm.openNewPostForm();

@@ -14,7 +14,7 @@ app.use(express.static('uploads'));
 app.use('/api', api);
 
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '../', 'index.html'));
+  res.sendFile(path.join(__dirname, '../', '../index.html'));
 });
 
 if (process.argv[2] !== undefined) {

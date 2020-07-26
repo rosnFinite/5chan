@@ -14,11 +14,6 @@ const db = new sqlite3.Database(DBSOURCE, (err) => {
       if (err) {
         // Tabelle wurde bereits erstellt
         console.error(err);
-      } else {
-        // Daten in Tabelle einfügen zum Debuggen
-        // Bei wiederholten Ausführen von npm start, wird bei jedem Durchlauf versucht eine neue Row zu erstellen.
-        // Beim 2. Durchlauf wird Artikel mit ID = 2 und titel/content = null erstell. Beim 3.Durchlauf Artikel mit ID= 3...
-        // somit fürht der URL Aufruf von article/id bei diesen nicht zu Fehlern sondern zu Erfolg ohne Ausgabe
       }
     });
   }
